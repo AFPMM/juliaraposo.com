@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Julia Raposo · Personal Chef · Rio de Janeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@300;400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #F5EFE2; }
+body { font-family: 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+button { font: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+input, textarea, select { font: inherit; color: inherit; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.img-placeholder { position: relative; overflow: hidden; background: var(--ph-bg, #ddd); }
+.img-placeholder::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, transparent 0 14px, var(--ph-stripe, rgba(0,0,0,0.06)) 14px 15px); pointer-events: none; }
+.img-placeholder .ph-label { position: absolute; bottom: 12px; left: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ph-label, rgba(0,0,0,0.5)); background: var(--ph-label-bg, rgba(255,255,255,0.7)); padding: 4px 8px; border-radius: 2px; backdrop-filter: blur(4px); }
+@keyframes mq { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script type="text/babel">
+
+// ── PALETA PRAIA (original) ───────────────────────────────────
+const T = {
+  bg: '#F5EFE2',
+  fg: '#1B3A4B',
+  green: '#3E7A85',
+  greenDeep: '#234C57',
+  salmon: '#DA7756',
+  line: 'rgba(27,58,75,0.16)',
+  soft: 'rgba(27,58,75,0.62)',
+  cond: '"Archivo Narrow", Impact, sans-serif',
+  sans: '"Inter", -apple-system, sans-serif',
+  mono: '"JetBrains Mono", ui-monospace, monospace',
+  serifIt: '"Bricolage Grotesque", Georgia, serif'
+};
+
+// ── COPY ─────────────────────────────────────────────────────
+const COPY = {
+  nav: {
+    pt: ['01 · A Chef', '02 · Serviços', '03 · Pratos', '04 · Reservar'],
+    en: ['01 · About', '02 · Services', '03 · Dishes', '04 · Book']
+  },
+  hero: {
+    pt: { eyebrow: 'Chefe Executiva · Rio de Janeiro', sub: 'Cozinha autoral que celebra os ingredientes brasileiros com a precisão da cozinha italiana. Menus assinados, eventos corporativos e consultoria gastronômica.', cta: 'Reservar uma experiência', ghost: 'Conhecer a chef' },
+    en: { eyebrow: 'Executive Chef · Rio de Janeiro', sub: 'Signature cooking that celebrates Brazilian ingredients with the precision of Italian craft. Bespoke menus, corporate events, and restaurant consulting.', cta: 'Book an experience', ghost: 'Meet the chef' }
+  },
+  about: {
+    pt: {
+      kicker: '01 — A Chef', role: 'Chefe Executiva',
+      body: [
+        'Formação internacional e experiência em restaurantes estrelados na Itália e no Brasil. Esteve à frente das cozinhas das cúpulas do G20 e dos BRICS, destacando a gastronomia brasileira com inovação e compromisso com a sustentabilidade.',
+        'Atualmente é sócia do Mercado Central, onde lidera o Bocado, seu primeiro restaurante, e a lanchonete Petí. Também assina o cardápio da Cantina do Museu de Arte Moderna do Rio e é responsável pela gastronomia dos seus eventos corporativos.'
+      ],
+      // CORREÇÃO 1: 5 células — última é Mercado Central com Bocado & Petí
+      stats: [
+        { n: '15+', l: 'anos de cozinha' },
+        { n: 'G20 · BRICS', l: 'cúpulas 2024 · 2025' },
+        { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
+        { n: 'MAM', l: 'cardápio assinado' }
+      ]
+    },
+    en: {
+      kicker: '01 — About', role: 'Executive Chef',
+      body: [
+        'Internationally trained, with deep experience across Michelin-starred kitchens in Italy and Brazil. Led the kitchens of the G20 (Nov 2024) and BRICS (Mar 2025) summits, spotlighting Brazilian ingredients with innovation and a commitment to food sustainability.',
+        'Currently a partner at Mercado Central, leading the Bocado and Petí restaurants, and signs the menu at the Museu de Arte Moderna canteen in Rio.'
+      ],
+      stats: [
+        { n: '15+', l: 'years cooking' },
+        { n: 'G20 · BRICS', l: 'summits 2024 · 2025' },
+        { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
+        { n: 'MAM', l: 'signed menu' }
+      ]
+    }
+  },
+  services: {
+    pt: { kicker: '02 — Serviços', items: [
+      { n: '01', name: 'Eventos corporativos', body: 'Cúpulas, jantares de estado, lançamentos e celebrações. Da concepção do cardápio à operação, com equipe própria.' },
+      { n: '02', name: 'Catering autoral', body: 'Cardápios desenhados a partir de ingredientes da estação, com narrativa, serviço e cenografia integrados.' },
+      { n: '03', name: 'Consultoria', body: 'Gestão de restaurantes, abertura de operações, desenvolvimento de cardápio e treinamento de brigadas.' }
+    ]},
+    en: { kicker: '02 — Services', items: [
+      { n: '01', name: 'Corporate events', body: 'Summits, state dinners, launches and celebrations. From menu concept to full operation, with our own brigade.' },
+      { n: '02', name: 'Signature catering', body: 'Seasonal menus designed with narrative, service and scenography woven together.' },
+      { n: '03', name: 'Consulting', body: 'Restaurant management, openings, menu development and brigade training.' }
+    ]}
+  },
+  gallery: {
+    pt: [
+      { name: 'Pirarucu glaceado', tag: 'AMAZÔNIA', side: 'Couve refogada, farofa de jambu', span: 'tall' },
+      { name: 'Tapioca crocante', tag: 'ENTRADA', side: 'Brie, mel de engenho, alecrim', span: 'wide' },
+      { name: 'Risoto de castanha-do-pará', tag: 'AUTORAL', side: 'Manteiga noisette, queijo da Canastra' },
+      { name: 'Moqueca contemporânea', tag: 'BAHIA · RIO', side: 'Camarão rosa, leite de coco, dendê' },
+      { name: 'Cordeiro à carioca', tag: 'PRINCIPAL', side: 'Purê de baroa, redução de cachaça' },
+      { name: 'Quindim de cupuaçu', tag: 'SOBREMESA', side: 'Calda de açúcar mascavo, flor de sal' }
+    ],
+    en: [
+      { name: 'Glazed pirarucu', tag: 'AMAZON', side: 'Braised collards, jambu farofa', span: 'tall' },
+      { name: 'Crispy tapioca', tag: 'STARTER', side: 'Brie, sugarcane honey, rosemary', span: 'wide' },
+      { name: 'Brazil-nut risotto', tag: 'SIGNATURE', side: 'Beurre noisette, Canastra cheese' },
+      { name: 'Contemporary moqueca', tag: 'BAHIA · RIO', side: 'Pink shrimp, coconut milk, dendê' },
+      { name: 'Carioca-style lamb', tag: 'MAIN', side: 'Baroa purée, cachaça reduction' },
+      { name: 'Cupuaçu quindim', tag: 'DESSERT', side: 'Muscovado caramel, fleur de sel' }
+    ]
+  },
+  press: {
+    pt: { kicker: '04 — Imprensa', items: [
+      { date: 'Mar 2025', source: 'Folha de S.Paulo', headline: 'Chef Julia Raposo comanda a cozinha da cúpula do BRICS no Rio', tag: 'Cúpula' },
+      { date: 'Nov 2024', source: 'O Globo', headline: 'Cardápio do G20 traz biomas brasileiros para o prato dos líderes', tag: 'Cúpula' },
+      { date: 'Set 2024', source: 'Veja Rio', headline: 'A nova Cantina do MAM, agora pelas mãos da chef Raposo', tag: 'Restaurante' },
+      { date: 'Jul 2024', source: 'Casa Vogue', headline: 'Mercado da Granado: o endereço gastronômico do verão carioca', tag: 'Lifestyle' },
+      { date: 'Mai 2024', source: 'Prazeres da Mesa', headline: 'Cozinha autoral com sotaque italiano e raiz brasileira', tag: 'Perfil' }
+    ]},
+    en: { kicker: '04 — Press', items: [
+      { date: 'Mar 2025', source: 'Folha de S.Paulo', headline: 'Chef Julia Raposo leads the BRICS summit kitchen in Rio', tag: 'Summit' },
+      { date: 'Nov 2024', source: 'O Globo', headline: 'G20 menu brings Brazilian biomes to leaders\u2019 plates', tag: 'Summit' },
+      { date: 'Sep 2024', source: 'Veja Rio', headline: 'The new MAM canteen, now in chef Raposo\u2019s hands', tag: 'Restaurant' },
+      { date: 'Jul 2024', source: 'Casa Vogue', headline: 'Mercado da Granado: the carioca summer\u2019s food address', tag: 'Lifestyle' },
+      { date: 'May 2024', source: 'Prazeres da Mesa', headline: 'Signature cooking with Italian accent and Brazilian roots', tag: 'Profile' }
+    ]}
+  },
+  booking: {
+    pt: {
+      kicker: '04 — Reservar',
+      sub: 'Fale connosco. A Julia ou alguém da equipe responderá em até 48 horas.',
+      labels: { name: 'Seu nome', email: 'E-mail', phone: 'Telefone', service: 'Tipo de serviço', date: 'Data prevista', message: 'Sobre a ocasião', submit: 'Enviar pedido', sending: 'Enviando…', sent: 'Recebido com sucesso.' },
+      services: ['Evento corporativo', 'Catering autoral', 'Consultoria', 'Outro'],
+      placeholder: 'Conta o contexto, o lugar, a vibe que você imagina…',
+      success: 'Recebido com sucesso. A Julia responderá o mais breve possível.',
+      validation: { name: 'Coloca seu nome aí, por favor.', email: 'E-mail inválido.', service: 'Escolhe o tipo de serviço.', message: 'Conta um pouquinho mais sobre a ocasião.' }
+    },
+    en: {
+      kicker: '04 — Book',
+      sub: 'Tell us what you have in mind. Julia or a team member replies within 48 hours.',
+      labels: { name: 'Your name', email: 'Email', phone: 'Phone', service: 'Type of service', date: 'Target date', message: 'About the occasion', submit: 'Send request', sending: 'Sending…', sent: 'Sent — thanks!' },
+      services: ['Corporate event', 'Signature catering', 'Consulting', 'Other'],
+      placeholder: 'Tell us the context, the place, the vibe you\u2019re imagining\u2026',
+      success: 'Received. Julia will get back to you shortly. Carioca hugs.',
+      validation: { name: 'Please add your name.', email: 'Invalid email.', service: 'Pick a type of service.', message: 'Tell us a bit more about the occasion.' }
+    }
+  },
+  footer: {
+    pt: { tagline: 'Cozinha autoral, raiz brasileira, técnica italiana.', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Chefe Executiva & Consultoria' },
+    en: { tagline: 'Signature cooking, Brazilian roots, Italian accent.', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Kitchen & Consulting' }
+  }
+};
+
+// ── NAV ──────────────────────────────────────────────────────
+function LangToggle({ lang, setLang }) {
+  return (
+    <div style={{ display: 'inline-flex', alignItems: 'center', border: `1px solid ${T.fg}`, borderRadius: 999, padding: 2, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
+      {['pt','en'].map(l => (
+        <button key={l} onClick={() => setLang(l)} style={{ padding: '5px 11px', borderRadius: 999, background: lang===l ? T.fg : 'transparent', color: lang===l ? T.bg : T.fg, transition: 'all 0.18s' }}>{l.toUpperCase()}</button>
+      ))}
+    </div>
+  );
+}
+
+function Nav({ lang, setLang, scrolled, sections }) {
+  const goTo = (i) => {
+    const el = sections.current[i];
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  return (
+    <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: scrolled ? 'rgba(245,239,226,0.92)' : T.bg, backdropFilter: scrolled ? 'blur(14px)' : 'none', borderBottom: `1px solid ${scrolled ? T.line : 'transparent'}`, transition: 'all 0.25s' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 44px' : '22px 44px', transition: 'padding 0.25s' }}>
+        <button onClick={() => window.scrollTo({top:0,behavior:'smooth'})} style={{ fontFamily: T.cond, fontSize: 20, fontWeight: 700, letterSpacing: '0.02em', color: T.fg }}>
+          Julia Raposo<span style={{ color: T.salmon }}>.</span>
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+          <ul style={{ listStyle: 'none', display: 'flex', gap: 28, margin: 0, padding: 0 }}>
+            {COPY.nav[lang].map((label, i) => (
+              <li key={label}>
+                <button onClick={() => goTo(i)} style={{ fontSize: 13, fontWeight: 500, paddingBottom: 4, color: T.fg, borderBottom: '1px solid transparent', transition: 'all 0.18s' }}
+                  onMouseEnter={e => e.currentTarget.style.borderBottomColor = T.salmon}
+                  onMouseLeave={e => e.currentTarget.style.borderBottomColor = 'transparent'}>
+                  {label}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <LangToggle lang={lang} setLang={setLang} />
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+// ── HERO ─────────────────────────────────────────────────────
+function Hero({ lang }) {
+  const c = COPY.hero[lang];
+  return (
+    <header style={{ position: 'relative', padding: '30px 56px 70px', minHeight: '94vh', display: 'grid', gridTemplateRows: 'auto 1fr auto', background: T.bg }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.soft, fontWeight: 500, paddingBottom: 20, borderBottom: `1px solid ${T.line}` }}>
+        <span>{c.eyebrow}</span>
+        <span>♦ {lang==='pt' ? 'cozinha autoral' : 'signature kitchen'}</span>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 50, alignItems: 'center', paddingTop: 50 }}>
+        <div>
+          <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: T.green, fontWeight: 600, marginBottom: 18 }}>
+            {lang==='pt' ? 'Chefe Executiva · Rio' : 'Executive Chef · Rio'}
+          </div>
+          <h1 style={{ fontFamily: T.cond, fontSize: 'clamp(110px,16vw,220px)', lineHeight: 0.84, letterSpacing: '-0.02em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
+            <span style={{ color: '#375f66' }}>JULIA</span><br />
+            <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo.</span>
+          </h1>
+          <div style={{ marginTop: 28, fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(22px,2.4vw,34px)', lineHeight: 1.25, letterSpacing: '-0.015em', color: T.fg, maxWidth: 620 }}>
+            {lang==='pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : 'Signature cooking, Brazilian roots, Italian accent.'}
+          </div>
+        </div>
+        <div style={{ position: 'relative' }}>
+          <div className="img-placeholder" style={{ width: '100%', height: 460, '--ph-bg': T.greenDeep, '--ph-stripe': 'rgba(218,119,86,0.12)', '--ph-label': T.bg, '--ph-label-bg': 'rgba(35,76,87,0.6)' }}>
+            <span className="ph-label">prato signature · julia em ação</span>
+          </div>
+          <div style={{ position: 'absolute', bottom: 16, left: 16, background: T.green, color: T.bg, padding: '10px 14px', fontFamily: T.mono, fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700 }}>
+            {lang==='pt' ? 'da estação · 2026' : 'in season · 2026'}
+          </div>
+        </div>
+      </div>
+      <div style={{ marginTop: 50, display: 'grid', gridTemplateColumns: '1.4fr auto', gap: 60, alignItems: 'end' }}>
+        <p style={{ fontSize: 19, lineHeight: 1.5, maxWidth: 620, margin: 0 }}>{c.sub}</p>
+        <div style={{ display: 'flex', gap: 12 }}>
+          <button style={{ padding: '18px 26px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, background: T.green, color: T.bg, display: 'inline-flex', alignItems: 'center', gap: 12, transition: 'background 0.18s' }}
+            onMouseEnter={e => e.currentTarget.style.background=T.greenDeep}
+            onMouseLeave={e => e.currentTarget.style.background=T.green}>
+            {c.cta} <span>→</span>
+          </button>
+          <button style={{ padding: '18px 26px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, border: `1.5px solid ${T.fg}`, color: T.fg, transition: 'all 0.18s' }}
+            onMouseEnter={e => { e.currentTarget.style.background=T.fg; e.currentTarget.style.color=T.bg; }}
+            onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color=T.fg; }}>
+            {c.ghost}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+// ── MARQUEE ──────────────────────────────────────────────────
+function Marquee() {
+  return (
+    <div style={{ background: T.green, color: T.salmon, padding: '22px 0', overflow: 'hidden', borderTop: `1px solid ${T.greenDeep}`, borderBottom: `1px solid ${T.greenDeep}` }}>
+      <div style={{ display: 'flex', gap: 42, whiteSpace: 'nowrap', fontFamily: T.cond, fontSize: 38, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', animation: 'mq 32s linear infinite' }}>
+        {[0,1].map(k => (
+          <React.Fragment key={k}>
+            <span>G20 · 2024</span><span style={{color:T.bg}}>◆</span>
+            <span style={{fontStyle:'italic',fontFamily:T.serifIt,textTransform:'none',fontWeight:500}}>BRICS · 2025</span><span style={{color:T.bg}}>◆</span>
+            <span>MAM RIO</span><span style={{color:T.bg}}>◆</span>
+            <span>BOCADO · PETÍ</span><span style={{color:T.bg}}>◆</span>
+            <span>MERCADO CENTRAL</span><span style={{color:T.bg}}>◆</span>
+            <span style={{fontStyle:'italic',fontFamily:T.serifIt,textTransform:'none',fontWeight:500}}>cozinha autoral</span><span style={{color:T.bg}}>◆</span>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── ABOUT ────────────────────────────────────────────────────
+function About({ lang }) {
+  const c = COPY.about[lang];
+  return (
+    <section style={{ padding: '130px 56px', background: T.bg, color: T.fg }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, marginBottom: 70 }}>
+        <div>
+          <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
+          <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(80px,11vw,160px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
+            JULIA<br />
+            <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo</span>
+          </h2>
+          <div style={{ marginTop: 22, fontFamily: T.mono, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.soft }}>— {c.role} · RJ · BR</div>
+        </div>
+        <div style={{ paddingTop: 30 }}>
+          {c.body.map((p,i) => <p key={i} style={{ fontSize: 17, lineHeight: 1.6, marginBottom: 22 }}>{p}</p>)}
+        </div>
+      </div>
+      {/* CORREÇÃO 1: 5 células numa linha */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', border: `1px solid ${T.line}` }}>
+        {c.stats.map((s,i) => (
+          <div key={i} style={{ padding: '40px 28px', borderRight: i<3 ? `1px solid ${T.line}` : 'none', color: T.fg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 160 }}>
+            <div style={{ fontFamily: T.cond, fontSize: 48, lineHeight: 1.0, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: T.green }}>{s.n}</div>
+            <div style={{ marginTop: 12, fontFamily: T.mono, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.75 }}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── SERVICES ─────────────────────────────────────────────────
+// CORREÇÃO 3: sem seta, sem pills, cards uniformes informativos
+function Services({ lang }) {
+  const c = COPY.services[lang];
+  return (
+    <section style={{ background: T.bg, color: T.fg, padding: '130px 56px', borderTop: `1px solid ${T.line}` }}>
+      <div style={{ marginBottom: 70 }}>
+        <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
+        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(72px,10vw,140px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
+          {lang==='pt' ? 'O QUE ESTÁ' : "WHAT'S"}<br />
+          <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.green }}>
+            {lang==='pt' ? 'no menu' : 'on the menu'}
+          </span>
+        </h2>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
+        {c.items.map((s,i) => (
+          <div key={i} style={{ background: 'transparent', border: `1px solid ${T.line}`, padding: '40px 32px 44px', minHeight: 320, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: T.cond, fontSize: 64, fontWeight: 700, lineHeight: 0.95, letterSpacing: '-0.01em', marginBottom: 24, color: T.green }}>{s.n}</div>
+            <h3 style={{ fontFamily: T.cond, fontSize: 30, lineHeight: 1.05, letterSpacing: '0.01em', fontWeight: 700, textTransform: 'uppercase', margin: '0 0 18px', color: T.fg }}>{s.name}</h3>
+            <p style={{ fontSize: 15, lineHeight: 1.6, flex: 1, opacity: 0.78, margin: 0 }}>{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── GALLERY ──────────────────────────────────────────────────
+// CORREÇÃO 5: tag consistente sup esq, título+ingredientes sempre visíveis, sem texto fantasma
+function Gallery({ lang }) {
+  const items = COPY.gallery[lang];
+  return (
+    <section style={{ padding: '130px 56px', background: T.bg }}>
+      <div style={{ marginBottom: 60 }}>
+        <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>
+          {lang==='pt' ? '03 — Pratos' : '03 — Dishes'}
+        </div>
+        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(72px,10vw,140px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
+          {lang==='pt' ? 'NO' : 'ON THE'}<br />
+          <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>{lang==='pt' ? 'prato' : 'plate'}</span>
+        </h2>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gridAutoRows: '220px', gap: 14 }}>
+        {items.map((it,i) => {
+          const span = it.span==='tall' ? {gridColumn:'span 2',gridRow:'span 2'} : it.span==='wide' ? {gridColumn:'span 4'} : {gridColumn:'span 2'};
+          return (
+            <div key={i} style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%' }}>
+              <div className="img-placeholder" style={{ position: 'absolute', inset: 0, '--ph-bg': T.greenDeep, '--ph-stripe': 'rgba(218,119,86,0.14)', '--ph-label': T.bg, '--ph-label-bg': 'rgba(0,0,0,0.4)' }}>
+                <span className="ph-label">foto · {it.name.toLowerCase()}</span>
+              </div>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(35,76,87,0) 40%,rgba(35,76,87,0.88) 100%)' }} />
+              <div style={{ position: 'absolute', top: 14, left: 14, fontFamily: T.mono, fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: T.bg, background: 'rgba(35,76,87,0.65)', padding: '4px 9px', backdropFilter: 'blur(6px)', fontWeight: 600 }}>{it.tag}</div>
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '18px 20px', color: T.bg }}>
+                <div style={{ fontFamily: T.cond, fontSize: 24, lineHeight: 1.05, textTransform: 'uppercase', letterSpacing: '0.005em', fontWeight: 700 }}>{it.name}</div>
+                <div style={{ marginTop: 5, fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 13, opacity: 0.88 }}>{it.side}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ── PRESS ────────────────────────────────────────────────────
+function Press({ lang }) {
+  const c = COPY.press[lang];
+  const lineCol = 'rgba(250,248,242,0.16)';
+  return (
+    <section style={{ padding: '130px 56px', background: T.fg, color: T.bg }}>
+      <div style={{ marginBottom: 60 }}>
+        <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.salmon, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
+        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(64px,8.5vw,130px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.salmon }}>
+          {lang==='pt' ? 'NA' : 'IN THE'}<br />
+          <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.bg }}>{lang==='pt' ? 'imprensa' : 'press'}</span>
+        </h2>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)' }}>
+        {c.items.map((p,i) => {
+          const isRight = i%2===1;
+          return (
+            <div key={i} style={{ padding: '34px 38px', borderTop: `1px solid ${lineCol}`, borderRight: !isRight ? `1px solid ${lineCol}` : 'none', borderBottom: i>=c.items.length-2 ? `1px solid ${lineCol}` : 'none', display: 'grid', gap: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.7 }}>{p.date}</div>
+                <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', border: `1px solid ${T.salmon}`, color: T.salmon, padding: '4px 9px', borderRadius: 999, fontWeight: 600 }}>{p.tag}</div>
+              </div>
+              <div style={{ fontFamily: T.cond, fontSize: 26, lineHeight: 1.1, fontWeight: 700, textTransform: 'uppercase' }}>{p.source}</div>
+              <div style={{ fontFamily: '"Bricolage Grotesque"', fontSize: 20, lineHeight: 1.3, letterSpacing: '-0.015em', fontStyle: 'italic', fontWeight: 400 }}>{p.headline}</div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ── BOOKING ──────────────────────────────────────────────────
+function Booking({ lang }) {
+  const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : 'Hi Julia! I would like to know more about your services.');
+  const waUrl = `https://wa.me/5521982792817?text=${waMsg}`;
+  return (
+    <section style={{ background: T.bg, color: T.fg, padding: '130px 56px', borderTop: `1px solid ${T.line}`, textAlign: 'center' }}>
+      <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.greenDeep, marginBottom: 24, fontWeight: 600 }}>
+        {lang === 'pt' ? '04 — Reservar' : '04 — Book'}
+      </div>
+      <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(64px,8vw,120px)', lineHeight: 0.88, letterSpacing: '-0.015em', fontWeight: 700, margin: '0 0 40px', textTransform: 'uppercase' }}>
+        {lang === 'pt' ? 'VAMOS' : "LET'S"}<br />
+        <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em' }}>{lang === 'pt' ? 'cozinhar?' : 'cook?'}</span>
+      </h2>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 14, padding: '20px 36px', background: '#25D366', color: '#fff', fontFamily: T.mono, fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, textDecoration: 'none', transition: 'background 0.18s' }}
+        onMouseEnter={e => e.currentTarget.style.background = '#1ebe5d'}
+        onMouseLeave={e => e.currentTarget.style.background = '#25D366'}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        {lang === 'pt' ? 'Falar com a Julia' : 'Talk to Julia'}
+      </a>
+    </section>
+  );
+}
+
+// ── FOOTER ───────────────────────────────────────────────────
+// CORREÇÃO 4: condensado, sem colunas, só Instagram
+function Footer({ lang }) {
+  const c = COPY.footer[lang];
+  return (
+    <footer style={{ background: T.fg, color: T.bg, padding: '70px 56px 32px' }}>
+      <div style={{ fontFamily:T.cond, fontSize:'clamp(60px,12vw,200px)', lineHeight:0.86, fontWeight:700, textTransform:'uppercase', letterSpacing:'-0.015em', marginBottom:28, color:T.bg }}>
+        JULIA <span style={{ fontFamily:'"Bricolage Grotesque"', fontStyle:'italic', fontWeight:500, textTransform:'none', letterSpacing:'-0.04em', color:T.green }}>raposo.</span>
+      </div>
+      <div style={{ fontFamily:'"Bricolage Grotesque"', fontStyle:'italic', fontSize:20, lineHeight:1.3, opacity:0.75, marginBottom:36, maxWidth:500 }}>
+        {c.tagline}
+      </div>
+      <div style={{ fontFamily:T.mono, fontSize:13, letterSpacing:'0.06em', lineHeight:2.2, opacity:0.85, marginBottom:28 }}>
+        <span>@juliaraposo.chef</span>
+        <span style={{opacity:0.35,margin:'0 14px'}}>·</span>
+        <span>{c.email}</span>
+        <span style={{opacity:0.35,margin:'0 14px'}}>·</span>
+        <span>{c.phone}</span>
+        <span style={{opacity:0.35,margin:'0 14px'}}>·</span>
+        <span>{c.addr}</span>
+      </div>
+      <div style={{ fontFamily:T.mono, fontSize:12, letterSpacing:'0.08em', opacity:0.55, marginBottom:44 }}>
+        Mercado Central · Bocado · Petí · Cantina MAM
+      </div>
+      <div style={{ paddingTop:26, borderTop:'1px solid rgba(250,248,242,0.14)', display:'flex', justifyContent:'space-between', fontFamily:T.mono, fontSize:11, letterSpacing:'0.06em', opacity:0.6 }}>
+        <span>{c.copy}</span>
+        <span>Feito no Rio · Cozinhado com afeto</span>
+      </div>
+    </footer>
+  );
+}
+
+// ── APP ──────────────────────────────────────────────────────
+function App() {
+  const [lang, setLang] = React.useState('pt');
+  const [scrolled, setScrolled] = React.useState(false);
+  const sectionRefs = React.useRef([]);
+
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const setRef = (i) => (el) => { sectionRefs.current[i] = el; };
+
+  return (
+    <div style={{ background: T.bg, color: T.fg }}>
+      <Nav lang={lang} setLang={setLang} scrolled={scrolled} sections={sectionRefs} />
+      <div ref={setRef(0)}><Hero lang={lang} /></div>
+      <div ref={setRef(1)}><About lang={lang} /></div>
+      <div ref={setRef(2)}><Services lang={lang} /></div>
+      <div ref={setRef(3)}><Gallery lang={lang} /></div>
+      <div ref={setRef(4)}><Booking lang={lang} /></div>
+      <Footer lang={lang} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
