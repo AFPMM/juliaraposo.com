@@ -24,24 +24,26 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 768px) {
   .hero-grid { grid-template-columns: 1fr !important; }
   .hero-img { display: none !important; }
-  .hero-wrap { padding: 20px 24px 50px !important; min-height: auto !important; }
-  .hero-ctas { grid-template-columns: 1fr !important; gap: 24px !important; }
-  .hero-ctas div { flex-direction: column !important; }
-  .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .hero-wrap { padding: 24px 24px 48px !important; min-height: auto !important; }
+  .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   .stats-grid { grid-template-columns: repeat(2,1fr) !important; }
+  .stats-grid > div { padding: 22px 16px !important; }
   .stats-grid > div:nth-child(2) { border-right: none !important; }
-  .stats-grid > div:nth-child(1), .stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(27,58,75,0.16) !important; }
+  .stats-grid > div:nth-child(3) { border-right: 1px solid rgba(27,58,75,0.16) !important; }
+  .stats-grid > div:nth-child(1),
+  .stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(27,58,75,0.16) !important; }
+  .stat-n { font-size: 32px !important; }
   .services-grid { grid-template-columns: 1fr !important; }
-  .dishes-grid { grid-template-columns: repeat(2,1fr) !important; grid-auto-rows: 180px !important; }
+  .dishes-grid { grid-template-columns: repeat(2,1fr) !important; grid-auto-rows: 160px !important; }
   .dishes-grid > div { grid-column: span 1 !important; grid-row: span 1 !important; }
-  .section-pad { padding: 70px 24px !important; }
-  .heading-xl { font-size: clamp(56px,14vw,90px) !important; }
+  .section-pad { padding: 50px 24px !important; }
   .nav-links { display: none !important; }
   .nav-inner { padding: 16px 24px !important; }
-  .footer-pad { padding: 50px 24px 24px !important; }
-  .footer-contacts { flex-direction: column !important; gap: 4px !important; }
-  .footer-contacts span.dot { display: none !important; }
-  .booking-pad { padding: 70px 24px !important; }
+  .footer-wrap { padding: 44px 24px 24px !important; }
+  .footer-info { flex-direction: column !important; gap: 6px !important; line-height: 1.8 !important; }
+  .footer-dot { display: none !important; }
+  .booking-section { padding: 60px 24px !important; text-align: center !important; }
+  .heading-section { font-size: clamp(48px,12vw,80px) !important; }
 }
 </style>
 </head>
@@ -79,7 +81,7 @@ const COPY = {
   },
   about: {
     pt: {
-      kicker: '01 — A Chef', role: 'Chefe Executiva',
+      kicker: 'A Chef', role: 'Chefe Executiva',
       body: [
         'Formação internacional e experiência em restaurantes estrelados na Itália e no Brasil. Esteve à frente das cozinhas das cúpulas do G20 e dos BRICS, destacando a gastronomia brasileira com inovação e compromisso com a sustentabilidade.',
         'Atualmente é sócia do Mercado Central, onde lidera o Bocado, seu primeiro restaurante, e a lanchonete Petí. Também assina o cardápio da Cantina do Museu de Arte Moderna do Rio e é responsável pela gastronomia dos seus eventos corporativos.'
@@ -93,7 +95,7 @@ const COPY = {
       ]
     },
     en: {
-      kicker: '01 — About', role: 'Executive Chef',
+      kicker: 'About', role: 'Executive Chef',
       body: [
         'Internationally trained, with deep experience across Michelin-starred kitchens in Italy and Brazil. Led the kitchens of the G20 (Nov 2024) and BRICS (Mar 2025) summits, spotlighting Brazilian ingredients with innovation and a commitment to food sustainability.',
         'Currently a partner at Mercado Central, leading the Bocado and Petí restaurants, and signs the menu at the Museu de Arte Moderna canteen in Rio.'
@@ -107,15 +109,15 @@ const COPY = {
     }
   },
   services: {
-    pt: { kicker: '02 — Serviços', items: [
-      { n: '01', name: 'Eventos corporativos', body: 'Cúpulas, jantares de estado, lançamentos e celebrações. Da concepção do cardápio à operação, com equipe própria.' },
-      { n: '02', name: 'Catering autoral', body: 'Cardápios desenhados a partir de ingredientes da estação, com narrativa, serviço e cenografia integrados.' },
-      { n: '03', name: 'Consultoria', body: 'Gestão de restaurantes, abertura de operações, desenvolvimento de cardápio e treinamento de brigadas.' }
+    pt: { kicker: 'Serviços', items: [
+      { name: 'Eventos corporativos', body: 'Cúpulas, jantares de estado, lançamentos e celebrações. Da concepção do cardápio à operação, com equipe própria.' },
+      { name: 'Catering autoral', body: 'Cardápios desenhados a partir de ingredientes da estação, com narrativa, serviço e cenografia integrados.' },
+      { name: 'Consultoria', body: 'Gestão de restaurantes, abertura de operações, desenvolvimento de cardápio e treinamento de brigadas.' }
     ]},
-    en: { kicker: '02 — Services', items: [
-      { n: '01', name: 'Corporate events', body: 'Summits, state dinners, launches and celebrations. From menu concept to full operation, with our own brigade.' },
-      { n: '02', name: 'Signature catering', body: 'Seasonal menus designed with narrative, service and scenography woven together.' },
-      { n: '03', name: 'Consulting', body: 'Restaurant management, openings, menu development and brigade training.' }
+    en: { kicker: 'Services', items: [
+      { name: 'Corporate events', body: 'Summits, state dinners, launches and celebrations. From menu concept to full operation, with our own brigade.' },
+      { name: 'Signature catering', body: 'Seasonal menus designed with narrative, service and scenography woven together.' },
+      { name: 'Consulting', body: 'Restaurant management, openings, menu development and brigade training.' }
     ]}
   },
   gallery: {
@@ -154,7 +156,7 @@ const COPY = {
   },
   booking: {
     pt: {
-      kicker: '04 — Reservar',
+      kicker: 'Reservar',
       sub: 'Fale connosco. A Julia ou alguém da equipe responderá em até 48 horas.',
       labels: { name: 'Seu nome', email: 'E-mail', phone: 'Telefone', service: 'Tipo de serviço', date: 'Data prevista', message: 'Sobre a ocasião', submit: 'Enviar pedido', sending: 'Enviando…', sent: 'Recebido com sucesso.' },
       services: ['Evento corporativo', 'Catering autoral', 'Consultoria', 'Outro'],
@@ -163,7 +165,7 @@ const COPY = {
       validation: { name: 'Coloca seu nome aí, por favor.', email: 'E-mail inválido.', service: 'Escolhe o tipo de serviço.', message: 'Conta um pouquinho mais sobre a ocasião.' }
     },
     en: {
-      kicker: '04 — Book',
+      kicker: 'Book',
       sub: 'Tell us what you have in mind. Julia or a team member replies within 48 hours.',
       labels: { name: 'Your name', email: 'Email', phone: 'Phone', service: 'Type of service', date: 'Target date', message: 'About the occasion', submit: 'Send request', sending: 'Sending…', sent: 'Sent — thanks!' },
       services: ['Corporate event', 'Signature catering', 'Consulting', 'Other'],
@@ -173,8 +175,8 @@ const COPY = {
     }
   },
   footer: {
-    pt: { tagline: 'Cozinha autoral, raiz brasileira, técnica italiana.', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Chefe Executiva & Consultoria' },
-    en: { tagline: 'Signature cooking, Brazilian roots, Italian accent.', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Kitchen & Consulting' }
+    pt: { tagline: 'Cozinha autoral, raiz brasileira, técnica italiana.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Chefe Executiva & Consultoria' },
+    en: { tagline: 'Signature cooking, Brazilian roots, Italian accent.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Executive Chef & Consulting' }
   }
 };
 
@@ -240,7 +242,7 @@ function Nav({ lang, setLang, scrolled, sections }) {
 function Hero({ lang }) {
   const c = COPY.hero[lang];
   return (
-    <header style={{ position: 'relative', background: T.bg }} className="hero-wrap section-pad">
+    <header style={{ position: 'relative', background: T.bg, padding: '30px 56px 60px' }} className="hero-wrap">
       <div style={{ paddingBottom: 20, borderBottom: `1px solid ${T.line}`, display: 'flex', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.soft, fontWeight: 500 }}>
         <span>{c.eyebrow}</span>
         <span>♦ {lang==='pt' ? 'cozinha autoral' : 'signature kitchen'}</span>
@@ -250,12 +252,24 @@ function Hero({ lang }) {
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: T.green, fontWeight: 600, marginBottom: 18 }}>
             {lang==='pt' ? 'Chefe Executiva · Rio' : 'Executive Chef · Rio'}
           </div>
-          <h1 className="heading-xl" style={{ fontFamily: T.cond, fontSize: 'clamp(110px,16vw,220px)', lineHeight: 0.84, letterSpacing: '-0.02em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
+          <h1 className="heading-xl" style={{ fontFamily: T.cond, fontSize: 'clamp(56px,8vw,120px)', lineHeight: 0.88, letterSpacing: '-0.02em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
             <span style={{ color: '#375f66' }}>JULIA</span><br />
             <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo.</span>
           </h1>
-          <div style={{ marginTop: 28, fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(18px,2.4vw,30px)', lineHeight: 1.25, letterSpacing: '-0.015em', color: T.fg, maxWidth: 620 }}>
+          <div style={{ marginTop: 24, fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(17px,1.8vw,24px)', lineHeight: 1.3, letterSpacing: '-0.015em', color: T.fg, maxWidth: 560 }}>
             {lang==='pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : 'Signature cooking, Brazilian roots, Italian accent.'}
+          </div>
+          <div style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <button style={{ padding: '16px 24px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, background: T.green, color: T.bg, display: 'inline-flex', alignItems: 'center', gap: 12, transition: 'background 0.18s' }}
+              onMouseEnter={e => e.currentTarget.style.background=T.greenDeep}
+              onMouseLeave={e => e.currentTarget.style.background=T.green}>
+              {c.cta} <span>→</span>
+            </button>
+            <button style={{ padding: '16px 24px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, border: `1.5px solid ${T.fg}`, color: T.fg, transition: 'all 0.18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background=T.fg; e.currentTarget.style.color=T.bg; }}
+              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color=T.fg; }}>
+              {c.ghost}
+            </button>
           </div>
         </div>
         <div className="hero-img" style={{ position: 'relative' }}>
@@ -266,18 +280,6 @@ function Hero({ lang }) {
             {lang==='pt' ? 'da estação · 2026' : 'in season · 2026'}
           </div>
         </div>
-      </div>
-      <div style={{ marginTop: 50, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-        <button style={{ padding: '18px 26px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, background: T.green, color: T.bg, display: 'inline-flex', alignItems: 'center', gap: 12, transition: 'background 0.18s' }}
-          onMouseEnter={e => e.currentTarget.style.background=T.greenDeep}
-          onMouseLeave={e => e.currentTarget.style.background=T.green}>
-          {c.cta} <span>→</span>
-        </button>
-        <button style={{ padding: '18px 26px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, border: `1.5px solid ${T.fg}`, color: T.fg, transition: 'all 0.18s' }}
-          onMouseEnter={e => { e.currentTarget.style.background=T.fg; e.currentTarget.style.color=T.bg; }}
-          onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color=T.fg; }}>
-          {c.ghost}
-        </button>
       </div>
     </header>
   );
@@ -307,11 +309,11 @@ function Marquee() {
 function About({ lang }) {
   const c = COPY.about[lang];
   return (
-    <section className="section-pad" style={{ padding: '130px 56px', background: T.bg, color: T.fg }}>
+    <section className="section-pad" style={{ padding: '90px 56px', background: T.bg, color: T.fg }}>
       <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, marginBottom: 70 }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
-          <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(80px,11vw,160px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
+          <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(56px,7vw,110px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
             JULIA<br />
             <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo</span>
           </h2>
@@ -324,9 +326,9 @@ function About({ lang }) {
       {/* CORREÇÃO 1: 5 células numa linha */}
       <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', border: `1px solid ${T.line}` }}>
         {c.stats.map((s,i) => (
-          <div key={i} style={{ padding: '40px 28px', borderRight: i<3 ? `1px solid ${T.line}` : 'none', color: T.fg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 160 }}>
-            <div style={{ fontFamily: T.cond, fontSize: 48, lineHeight: 1.0, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: T.green }}>{s.n}</div>
-            <div style={{ marginTop: 12, fontFamily: T.mono, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.75 }}>{s.l}</div>
+          <div key={i} style={{ padding: '28px 20px', borderRight: i<3 ? `1px solid ${T.line}` : 'none', color: T.fg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 120 }}>
+            <div className="stat-n" style={{ fontFamily: T.cond, fontSize: 'clamp(24px,3vw,40px)', lineHeight: 1.0, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: T.green, whiteSpace: 'nowrap' }}>{s.n}</div>
+            <div style={{ marginTop: 10, fontFamily: T.mono, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.75 }}>{s.l}</div>
           </div>
         ))}
       </div>
@@ -339,10 +341,10 @@ function About({ lang }) {
 function Services({ lang }) {
   const c = COPY.services[lang];
   return (
-    <section style={{ background: T.bg, color: T.fg, padding: '130px 56px', borderTop: `1px solid ${T.line}` }}>
+    <section style={{ background: T.bg, color: T.fg, padding: '90px 56px', borderTop: `1px solid ${T.line}` }}>
       <div style={{ marginBottom: 70 }}>
         <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
-        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(72px,10vw,140px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
+        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
           {lang==='pt' ? 'O QUE ESTÁ' : "WHAT'S"}<br />
           <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.green }}>
             {lang==='pt' ? 'no menu' : 'on the menu'}
@@ -351,9 +353,8 @@ function Services({ lang }) {
       </div>
       <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
         {c.items.map((s,i) => (
-          <div key={i} style={{ background: 'transparent', border: `1px solid ${T.line}`, padding: '40px 32px 44px', minHeight: 320, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontFamily: T.cond, fontSize: 64, fontWeight: 700, lineHeight: 0.95, letterSpacing: '-0.01em', marginBottom: 24, color: T.green }}>{s.n}</div>
-            <h3 style={{ fontFamily: T.cond, fontSize: 30, lineHeight: 1.05, letterSpacing: '0.01em', fontWeight: 700, textTransform: 'uppercase', margin: '0 0 18px', color: T.fg }}>{s.name}</h3>
+          <div key={i} style={{ background: 'transparent', border: `1px solid ${T.line}`, padding: '36px 32px 40px', minHeight: 220, display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{ fontFamily: T.cond, fontSize: 28, lineHeight: 1.05, letterSpacing: '0.01em', fontWeight: 700, textTransform: 'uppercase', margin: '0 0 16px', color: T.fg }}>{s.name}</h3>
             <p style={{ fontSize: 15, lineHeight: 1.6, flex: 1, opacity: 0.78, margin: 0 }}>{s.body}</p>
           </div>
         ))}
@@ -367,12 +368,12 @@ function Services({ lang }) {
 function Gallery({ lang }) {
   const items = COPY.gallery[lang];
   return (
-    <section style={{ padding: '130px 56px', background: T.bg }}>
+    <section style={{ padding: '90px 56px', background: T.bg }}>
       <div style={{ marginBottom: 60 }}>
         <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>
-          {lang==='pt' ? '03 — Pratos' : '03 — Dishes'}
+          {lang==='pt' ? 'Pratos' : 'Dishes'}
         </div>
-        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(72px,10vw,140px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
+        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
           {lang==='pt' ? 'NO' : 'ON THE'}<br />
           <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>{lang==='pt' ? 'prato' : 'plate'}</span>
         </h2>
@@ -404,10 +405,10 @@ function Press({ lang }) {
   const c = COPY.press[lang];
   const lineCol = 'rgba(250,248,242,0.16)';
   return (
-    <section style={{ padding: '130px 56px', background: T.fg, color: T.bg }}>
+    <section style={{ padding: '90px 56px', background: T.fg, color: T.bg }}>
       <div style={{ marginBottom: 60 }}>
         <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.salmon, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
-        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(64px,8.5vw,130px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.salmon }}>
+        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.salmon }}>
           {lang==='pt' ? 'NA' : 'IN THE'}<br />
           <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.bg }}>{lang==='pt' ? 'imprensa' : 'press'}</span>
         </h2>
@@ -436,11 +437,11 @@ function Booking({ lang }) {
   const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : 'Hi Julia! I would like to know more about your services.');
   const waUrl = `https://wa.me/5521982792817?text=${waMsg}`;
   return (
-    <section style={{ background: T.bg, color: T.fg, padding: '130px 56px', borderTop: `1px solid ${T.line}`, textAlign: 'center' }}>
+    <section style={{ background: T.bg, color: T.fg, padding: '90px 56px', borderTop: `1px solid ${T.line}`, textAlign: 'center' }}>
       <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.greenDeep, marginBottom: 24, fontWeight: 600 }}>
         {lang === 'pt' ? '04 — Reservar' : '04 — Book'}
       </div>
-      <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(64px,8vw,120px)', lineHeight: 0.88, letterSpacing: '-0.015em', fontWeight: 700, margin: '0 0 40px', textTransform: 'uppercase' }}>
+      <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.88, letterSpacing: '-0.015em', fontWeight: 700, margin: '0 0 40px', textTransform: 'uppercase' }}>
         {lang === 'pt' ? 'VAMOS' : "LET'S"}<br />
         <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em' }}>{lang === 'pt' ? 'cozinhar?' : 'cook?'}</span>
       </h2>
@@ -459,26 +460,26 @@ function Booking({ lang }) {
 function Footer({ lang }) {
   const c = COPY.footer[lang];
   return (
-    <footer style={{ background: T.fg, color: T.bg, padding: '70px 56px 32px' }}>
-      <div style={{ fontFamily:T.cond, fontSize:'clamp(60px,12vw,200px)', lineHeight:0.86, fontWeight:700, textTransform:'uppercase', letterSpacing:'-0.015em', marginBottom:28, color:T.bg }}>
+    <footer className="footer-wrap" style={{ background: T.fg, color: T.bg, padding: '70px 56px 32px' }}>
+      <div style={{ fontFamily:T.cond, fontSize:'clamp(52px,10vw,160px)', lineHeight:0.86, fontWeight:700, textTransform:'uppercase', letterSpacing:'-0.015em', marginBottom:28, color:T.bg }}>
         JULIA <span style={{ fontFamily:'"Bricolage Grotesque"', fontStyle:'italic', fontWeight:500, textTransform:'none', letterSpacing:'-0.04em', color:T.green }}>raposo.</span>
       </div>
       <div style={{ fontFamily:'"Bricolage Grotesque"', fontStyle:'italic', fontSize:20, lineHeight:1.3, opacity:0.75, marginBottom:36, maxWidth:500 }}>
         {c.tagline}
       </div>
-      <div style={{ fontFamily:T.mono, fontSize:13, letterSpacing:'0.06em', lineHeight:2.2, opacity:0.85, marginBottom:28 }}>
-        <span>@juliaraposo.chef</span>
-        <span style={{opacity:0.35,margin:'0 14px'}}>·</span>
+      <div className="footer-info" style={{ fontFamily:T.mono, fontSize:13, letterSpacing:'0.06em', opacity:0.85, marginBottom:28, display:'flex', flexWrap:'wrap', gap:'0 0', lineHeight:2.2 }}>
+        <span>{c.ig}</span>
+        <span className="footer-dot" style={{opacity:0.35,margin:'0 14px'}}>·</span>
         <span>{c.email}</span>
-        <span style={{opacity:0.35,margin:'0 14px'}}>·</span>
+        <span className="footer-dot" style={{opacity:0.35,margin:'0 14px'}}>·</span>
         <span>{c.phone}</span>
-        <span style={{opacity:0.35,margin:'0 14px'}}>·</span>
+        <span className="footer-dot" style={{opacity:0.35,margin:'0 14px'}}>·</span>
         <span>{c.addr}</span>
       </div>
       <div style={{ fontFamily:T.mono, fontSize:12, letterSpacing:'0.08em', opacity:0.55, marginBottom:44 }}>
         Mercado Central · Bocado · Petí · Cantina MAM
       </div>
-      <div style={{ paddingTop:26, borderTop:'1px solid rgba(250,248,242,0.14)', display:'flex', justifyContent:'space-between', fontFamily:T.mono, fontSize:11, letterSpacing:'0.06em', opacity:0.6 }}>
+      <div style={{ paddingTop:26, borderTop:'1px solid rgba(250,248,242,0.14)', display:'flex', flexWrap:'wrap', justifyContent:'space-between', gap:8, fontFamily:T.mono, fontSize:11, letterSpacing:'0.06em', opacity:0.6 }}>
         <span>{c.copy}</span>
         <span>Feito no Rio · Cozinhado com afeto</span>
       </div>
