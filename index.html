@@ -22,92 +22,127 @@ a { color: inherit; text-decoration: none; }
 
 @media (min-width: 769px) { .hamburger { display: none !important; } }
 @media (max-width: 768px) {
-  /* Hero - mostrar imagem em mobile */
-  .hero-grid { 
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
-  }
-  .hero-img { 
-    display: block !important;
-    margin: 0 -24px 20px !important;
-  }
-  .hero-img img { 
-    height: 280px !important;
-    width: 100% !important;
-  }
-  .hero-wrap { 
-    padding: 24px 24px 48px !important;
-    min-height: auto !important;
+  /* Prevent all horizontal overflow */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
   }
   
-  /* About */
+  * {
+    max-width: 100% !important;
+  }
+  
+  /* Navigation */
+  .nav-inner { 
+    padding: 12px 20px !important;
+  }
+  .nav-links { display: none !important; }
+  
+  /* Hero - prioridade mobile */
+  .hero-wrap { 
+    padding: 20px 20px 40px !important;
+  }
+  
+  .hero-grid { 
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  
+  .hero-img { 
+    display: block !important;
+    margin: 0 -20px 16px !important;
+    order: -1;
+  }
+  
+  .hero-img img { 
+    height: 240px !important;
+    width: calc(100% + 40px) !important;
+    object-fit: cover !important;
+  }
+  
+  /* About section */
   .about-grid { 
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 24px !important;
   }
+  
+  /* Stats grid - 2 colunas sem cortar */
   .stats-grid { 
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: 1fr 1fr !important;
     gap: 0 !important;
+    width: 100% !important;
   }
+  
   .stats-grid > div { 
-    padding: 20px 12px !important;
+    padding: 18px 12px !important;
+    min-height: 100px !important;
     border-right: 1px solid rgba(27,58,75,0.16) !important;
     border-bottom: 1px solid rgba(27,58,75,0.16) !important;
   }
+  
   .stats-grid > div:nth-child(2n) { 
     border-right: none !important;
   }
-  .stats-grid > div:nth-child(n+3) { 
+  
+  .stats-grid > div:nth-child(3),
+  .stats-grid > div:nth-child(4) { 
     border-bottom: none !important;
   }
+  
   .stat-n { 
-    font-size: 24px !important;
+    font-size: 22px !important;
     line-height: 1.1 !important;
+    white-space: normal !important;
   }
   
   /* Services */
   .services-grid { 
     grid-template-columns: 1fr !important;
-    gap: 18px !important;
+    gap: 16px !important;
   }
   
-  /* Gallery */
+  /* Gallery - 1 coluna em mobile */
   .dishes-grid { 
     grid-template-columns: 1fr !important;
-    grid-auto-rows: 200px !important;
+    grid-auto-rows: 180px !important;
     gap: 10px !important;
   }
+  
   .dishes-grid > div { 
     grid-column: span 1 !important;
     grid-row: span 1 !important;
   }
   
-  /* Navigation */
-  .nav-links { display: none !important; }
-  .nav-inner { padding: 14px 20px !important; }
-  
   /* Footer */
-  .footer-wrap { padding: 40px 24px 24px !important; }
+  .footer-wrap { 
+    padding: 36px 20px 20px !important;
+  }
+  
   .footer-info { 
     flex-direction: column !important;
-    gap: 6px !important;
-    line-height: 1.8 !important;
-  }
-  .footer-dot { display: none !important; }
-  
-  /* General */
-  .section-pad { padding: 50px 24px !important; }
-  .heading-section { 
-    font-size: clamp(36px, 9vw, 64px) !important;
-    line-height: 1.05 !important;
+    gap: 4px !important;
+    line-height: 1.6 !important;
   }
   
-  /* Prevent overflow */
-  body { 
-    overflow-x: hidden !important;
+  .footer-dot { 
+    display: none !important;
   }
-  * { 
-    max-width: 100%;
+  
+  /* Typography mobile */
+  h1, .heading-xl { 
+    font-size: clamp(32px, 8vw, 56px) !important;
+    line-height: 0.95 !important;
+  }
+  
+  h2, .heading-section { 
+    font-size: clamp(28px, 7vw, 48px) !important;
+    line-height: 1 !important;
+  }
+  
+  /* General spacing */
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 }
 </style>
@@ -268,7 +303,7 @@ function Nav({ lang, setLang, scrolled, sections }) {
     <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: scrolled ? 'rgba(245,239,226,0.92)' : T.bg, backdropFilter: scrolled ? 'blur(14px)' : 'none', borderBottom: `1px solid ${scrolled ? T.line : 'transparent'}`, transition: 'all 0.25s' }}>
       <div className="nav-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 44px' : '22px 44px', transition: 'padding 0.25s' }}>
         <button onClick={() => window.scrollTo({top:0,behavior:'smooth'})} style={{ fontFamily: T.cond, fontSize: 20, fontWeight: 700, letterSpacing: '0.02em', color: T.fg }}>
-          Julia Raposo<span style={{ color: T.salmon }}>.</span>
+          JR<span style={{ color: T.salmon }}>.</span>
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
           <ul className="nav-links" style={{ listStyle: 'none', display: 'flex', gap: 28, margin: 0, padding: 0 }}>
@@ -308,9 +343,9 @@ function Hero({ lang, onBookClick, onAboutClick }) {
   const c = COPY.hero[lang];
   return (
     <header style={{ position: 'relative', background: T.bg, padding: '30px 56px 60px' }} className="hero-wrap">
-      <div style={{ paddingBottom: 20, borderBottom: `1px solid ${T.line}`, display: 'flex', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.soft, fontWeight: 500 }}>
+      <div style={{ paddingBottom: 20, borderBottom: `1px solid ${T.line}`, display: 'flex', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.soft, fontWeight: 500, flexWrap: 'wrap', gap: '8px 20px' }}>
         <span>{c.eyebrow}</span>
-        <span>♦ {lang==='pt' ? 'cozinha autoral' : 'signature kitchen'}</span>
+        <span>♦ Mercado Central · Bocado · Petí · MAM</span>
       </div>
       <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 50, alignItems: 'center', paddingTop: 50 }}>
         <div>
@@ -492,13 +527,13 @@ function Booking({ lang }) {
   const waUrl = `https://wa.me/5521982792817?text=${waMsg}`;
   const c = lang === 'pt' ? {
     kicker: '04 — Reservar',
-    title: 'Conte-nos a sua ideia ou necessidade?',
+    title: 'Conte-nos a sua ideia ou necessidade',
     cta: 'Iniciar conversa',
     email: 'juliaraposodacamara@gmail.com',
     phone: '+55 21 98279-2817'
   } : {
     kicker: '04 — Book',
-    title: "Tell us your idea or need?",
+    title: 'Tell us your idea or need',
     cta: 'Start conversation',
     email: 'juliaraposodacamara@gmail.com',
     phone: '+55 21 98279-2817'
