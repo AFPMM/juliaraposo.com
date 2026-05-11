@@ -22,71 +22,93 @@ a { color: inherit; text-decoration: none; }
 
 @media (min-width: 769px) { .hamburger { display: none !important; } }
 @media (max-width: 768px) {
-  /* Hero */
-  .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .hero-img { 
-    display: block !important; 
-    order: -1 !important;
-    margin: 0 -24px !important;
+  /* Hero - mostrar imagem em mobile */
+  .hero-grid { 
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
   }
-  .hero-img img { height: 300px !important; }
-  .hero-wrap { padding: 24px 24px 48px !important; min-height: auto !important; }
+  .hero-img { 
+    display: block !important;
+    margin: 0 -24px 20px !important;
+  }
+  .hero-img img { 
+    height: 280px !important;
+    width: 100% !important;
+  }
+  .hero-wrap { 
+    padding: 24px 24px 48px !important;
+    min-height: auto !important;
+  }
   
   /* About */
-  .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .about-grid { 
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
   .stats-grid { 
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0 !important;
   }
   .stats-grid > div { 
-    padding: 22px 16px !important;
+    padding: 20px 12px !important;
     border-right: 1px solid rgba(27,58,75,0.16) !important;
     border-bottom: 1px solid rgba(27,58,75,0.16) !important;
   }
-  .stats-grid > div:nth-child(2n) { border-right: none !important; }
-  .stats-grid > div:nth-child(n+3) { border-bottom: none !important; }
-  .stat-n { font-size: 28px !important; line-height: 1.1 !important; }
+  .stats-grid > div:nth-child(2n) { 
+    border-right: none !important;
+  }
+  .stats-grid > div:nth-child(n+3) { 
+    border-bottom: none !important;
+  }
+  .stat-n { 
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+  }
   
   /* Services */
-  .services-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .services-grid { 
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
   
   /* Gallery */
   .dishes-grid { 
     grid-template-columns: 1fr !important;
-    grid-auto-rows: 220px !important;
-    gap: 12px !important;
+    grid-auto-rows: 200px !important;
+    gap: 10px !important;
   }
   .dishes-grid > div { 
-    grid-column: span 1 !important; 
-    grid-row: span 1 !important; 
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
   }
   
   /* Navigation */
   .nav-links { display: none !important; }
-  .nav-inner { padding: 16px 24px !important; }
+  .nav-inner { padding: 14px 20px !important; }
   
   /* Footer */
-  .footer-wrap { padding: 44px 24px 24px !important; }
+  .footer-wrap { padding: 40px 24px 24px !important; }
   .footer-info { 
-    flex-direction: column !important; 
-    gap: 6px !important; 
-    line-height: 1.8 !important; 
+    flex-direction: column !important;
+    gap: 6px !important;
+    line-height: 1.8 !important;
   }
   .footer-dot { display: none !important; }
   
-  /* General sections */
+  /* General */
   .section-pad { padding: 50px 24px !important; }
-  .heading-section { font-size: clamp(38px, 10vw, 64px) !important; }
-  
-  /* Typography adjustments */
-  h1, h2 { 
-    font-size: clamp(36px, 9vw, 72px) !important;
-    line-height: 1 !important;
+  .heading-section { 
+    font-size: clamp(36px, 9vw, 64px) !important;
+    line-height: 1.05 !important;
   }
   
-  /* Prevent horizontal overflow */
-  body { overflow-x: hidden !important; }
-  * { max-width: 100% !important; }
+  /* Prevent overflow */
+  body { 
+    overflow-x: hidden !important;
+  }
+  * { 
+    max-width: 100%;
+  }
 }
 </style>
 </head>
@@ -469,13 +491,13 @@ function Booking({ lang }) {
   const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : 'Hi Julia! I would like to know more about your services.');
   const waUrl = `https://wa.me/5521982792817?text=${waMsg}`;
   const c = lang === 'pt' ? {
-    kicker: '05 — Reservar',
+    kicker: '04 — Reservar',
     title: 'Conte-nos a sua ideia ou necessidade?',
     cta: 'Iniciar conversa',
     email: 'juliaraposodacamara@gmail.com',
     phone: '+55 21 98279-2817'
   } : {
-    kicker: '05 — Book',
+    kicker: '04 — Book',
     title: "Tell us your idea or need?",
     cta: 'Start conversation',
     email: 'juliaraposodacamara@gmail.com',
@@ -573,12 +595,11 @@ function App() {
   return (
     <div style={{ background: T.bg, color: T.fg }}>
       <Nav lang={lang} setLang={setLang} scrolled={scrolled} sections={sectionRefs} />
-      <div ref={setRef(0)}><Hero lang={lang} onBookClick={() => goToSection(5)} onAboutClick={() => goToSection(1)} /></div>
+      <div ref={setRef(0)}><Hero lang={lang} onBookClick={() => goToSection(4)} onAboutClick={() => goToSection(1)} /></div>
       <div ref={setRef(1)}><About lang={lang} /></div>
       <div ref={setRef(2)}><Services lang={lang} /></div>
       <div ref={setRef(3)}><Gallery lang={lang} /></div>
-      <div ref={setRef(4)}><Press lang={lang} /></div>
-      <div ref={setRef(5)}><Booking lang={lang} /></div>
+      <div ref={setRef(4)}><Booking lang={lang} /></div>
       <Footer lang={lang} />
     </div>
   );
