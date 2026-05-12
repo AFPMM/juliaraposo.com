@@ -11,6 +11,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: #F5EFE2; }
 body { font-family: 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+strong { font-weight: 700; color: #1B3A4B; }
 button { font: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
 input, textarea, select { font: inherit; color: inherit; }
 img { max-width: 100%; display: block; }
@@ -92,6 +93,7 @@ a { color: inherit; text-decoration: none; }
     width: calc(100% + 40px) !important;
     max-width: none !important;
     object-fit: cover !important;
+    border-radius: 0 !important;
   }
   
   /* About section */
@@ -124,9 +126,15 @@ a { color: inherit; text-decoration: none; }
   }
   
   .stat-n { 
-    font-size: 22px !important;
-    line-height: 1.1 !important;
+    font-size: 20px !important;
+    line-height: 1.15 !important;
     white-space: normal !important;
+  }
+  
+  /* About text columns */
+  .about-text {
+    columns: 1 !important;
+    column-gap: 0 !important;
   }
   
   /* Services */
@@ -172,21 +180,12 @@ a { color: inherit; text-decoration: none; }
     height: 240px !important;
     width: calc(100% + 40px) !important;
     max-width: none !important;
+    border-radius: 0 !important;
   }
   
   /* Footer */
   footer { 
     padding: 20px 20px !important;
-  }
-  
-  footer > div {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 20px !important;
-  }
-  
-  footer ul {
-    display: none !important;
   }
   
   /* Typography mobile */
@@ -204,6 +203,11 @@ a { color: inherit; text-decoration: none; }
   section {
     padding-left: 20px !important;
     padding-right: 20px !important;
+  }
+  
+  /* Marquee mobile */
+  .marquee-text {
+    font-size: 24px !important;
   }
 }
 </style>
@@ -243,29 +247,43 @@ const COPY = {
   about: {
     pt: {
       kicker: 'A Chef', role: 'Chefe Executiva',
-      body: [
-        'Formação internacional e experiência em restaurantes estrelados na Itália e no Brasil. Esteve à frente das cozinhas das cúpulas do G20 e dos BRICS, destacando a gastronomia brasileira com inovação e compromisso com a sustentabilidade.',
-        'Atualmente é sócia do Mercado Central, onde lidera o Bocado, seu primeiro restaurante, e a lanchonete Petí. Também assina o cardápio da Cantina do Museu de Arte Moderna do Rio e é responsável pela gastronomia dos seus eventos corporativos.'
+      intro: [
+        'Formação internacional com passagem pela prestigiada <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, na <strong>Itália</strong>, e experiência em <strong>restaurantes estrelados Michelin</strong>. Comandou as cozinhas das <strong>cúpulas do G20 e BRICS</strong> e do evento da <strong>Bloomberg Brasil</strong>, destacando a gastronomia brasileira com inovação e compromisso com a sustentabilidade.',
+        'Atualmente é sócia do <strong>Mercado Central</strong>, onde lidera o <strong>Bocado</strong> e a lanchonete <strong>Petí</strong>. Assina o cardápio da <strong>Cantina do MAM</strong> e da <strong>Canastra Pizzaria</strong>, além de oferecer consultoria especializada em gestão de restaurantes, catering e montagem de cozinhas.',
+        'Com uma trajetória que une <strong>técnica internacional</strong>, experiência em <strong>casas estreladas</strong>, atuação em <strong>grandes eventos</strong> e <strong>visão de negócios</strong>, Júlia Raposo se consolida como uma profissional completa, capaz de transformar projetos gastronômicos em verdadeiras experiências de sabor e sucesso.'
       ],
-      // CORREÇÃO 1: 5 células — última é Mercado Central com Bocado & Petí
+      body: [
+        'A paixão pela gastronomia sempre fez parte da vida da chef <strong>Júlia Raposo</strong>, mas foi em 2012, em <strong>Londres</strong>, que ela deu os primeiros passos profissionais ao ingressar na <strong>Cookery School at Little Portland Street</strong>.',
+        'De volta ao Brasil, formou-se como <strong>Chef Executiva pelo Senac</strong> e atuou em restaurantes conceituados do cenário carioca. Na <strong>ONG Gastromotiva</strong>, onde trabalhou por um ano, aprofundou seus conhecimentos em aproveitamento integral dos alimentos e na política de desperdício mínimo.',
+        'Em busca de excelência, mudou-se para a <strong>Itália</strong> e formou-se na prestigiada <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, considerada uma das escolas de gastronomia mais renomadas da Europa. Passou por diferentes regiões italianas – <strong>Milão</strong>, <strong>Parma</strong> e <strong>Puglia</strong> – trabalhando em <strong>restaurantes estrelados</strong> e se especializando na técnica e filosofia da cozinha italiana, sempre priorizando criatividade, ingredientes frescos e respeito à sazonalidade.',
+        'De volta ao Rio de Janeiro em 2020, após o início da pandemia, Júlia seguiu à frente de cozinhas de destaque, entre elas restaurantes na Barra da Tijuca e no Village Mall. Recentemente, esteve no comando gastronômico de importantes eventos internacionais sediados no Rio de Janeiro, como a <strong>Cúpula do G20</strong>, a <strong>Cúpula do BRICS</strong> e o evento da <strong>Bloomberg Brasil</strong>.',
+        'Júlia também tem seus próprios negócios no <strong>Mercado Central</strong>: o restaurante <strong>Bocado</strong> e a lanchonete <strong>Petí</strong>, projetos que refletem sua identidade gastronômica contemporânea, criativa e afetiva.',
+        'Atualmente, a chef assina o cardápio da <strong>Cantina do MAM</strong>, no <strong>Museu de Arte Moderna do Rio de Janeiro</strong>, e da <strong>Canastra Pizzaria</strong>. Além disso, oferece consultoria especializada em gestão de restaurantes, catering e montagem de cozinhas — do layout ao cardápio, incluindo treinamento de equipes.',
+        'Com uma trajetória que une <strong>técnica internacional</strong>, experiência em <strong>casas estreladas</strong>, atuação em <strong>grandes eventos</strong> e <strong>visão de negócios</strong>, Júlia Raposo se consolida como uma profissional completa, capaz de transformar projetos gastronômicos em verdadeiras experiências de sabor e sucesso.'
+      ],
       stats: [
         { n: '15+', l: 'anos de cozinha' },
-        { n: 'G20 · BRICS', l: 'cúpulas 2024 · 2025' },
+        { n: 'G20 · BRICS · BLOOMBERG', l: 'eventos 2024 · 2025' },
         { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
-        { n: 'MAM', l: 'cardápio assinado' }
+        { n: 'MAM', l: 'Chefe Consultora Estratégica' }
       ]
     },
     en: {
       kicker: 'About', role: 'Executive Chef',
+      intro: [
+        'Internationally trained at the prestigious Alma – Scuola di Alta Formazione in Cucina in Italy, with experience in Michelin-starred restaurants. Led the kitchens of the G20 and BRICS summits and the Bloomberg Brasil event, highlighting Brazilian gastronomy with innovation and commitment to sustainability.',
+        'Currently a partner at Mercado Central, where she leads Bocado and the Petí bistro. Signs the menu at Cantina do MAM and Canastra Pizzaria, and offers specialized consulting in restaurant management, catering, and kitchen setup.',
+        'With a trajectory that combines international technique, experience in starred establishments, performance at major events, and business vision, Júlia Raposo establishes herself as a complete professional, capable of transforming gastronomic projects into true experiences of flavor and success.'
+      ],
       body: [
         'Internationally trained, with deep experience across Michelin-starred kitchens in Italy and Brazil. Led the kitchens of the G20 (Nov 2024) and BRICS (Mar 2025) summits, spotlighting Brazilian ingredients with innovation and a commitment to food sustainability.',
         'Currently a partner at Mercado Central, leading the Bocado and Petí restaurants, and signs the menu at the Museu de Arte Moderna canteen in Rio.'
       ],
       stats: [
         { n: '15+', l: 'years cooking' },
-        { n: 'G20 · BRICS', l: 'summits 2024 · 2025' },
+        { n: 'G20 · BRICS · BLOOMBERG', l: 'events 2024 · 2025' },
         { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
-        { n: 'MAM', l: 'signed menu' }
+        { n: 'MAM', l: 'Strategic Consulting Chef' }
       ]
     }
   },
@@ -288,12 +306,24 @@ const COPY = {
       {},
       {},
       {},
+      {},
+      { span: 'wide' },
+      {},
+      { span: 'tall' },
+      {},
+      {},
       {}
     ],
     en: [
       { span: 'tall' },
       { span: 'wide' },
       {},
+      {},
+      {},
+      {},
+      { span: 'wide' },
+      {},
+      { span: 'tall' },
       {},
       {},
       {}
@@ -362,7 +392,7 @@ function Nav({ lang, setLang, scrolled, sections }) {
   return (
     <>
     <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: scrolled ? 'rgba(245,239,226,0.92)' : T.bg, backdropFilter: scrolled ? 'blur(14px)' : 'none', borderBottom: `1px solid ${scrolled ? T.line : 'transparent'}`, transition: 'all 0.25s' }}>
-      <div className="nav-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 44px' : '22px 44px', transition: 'padding 0.25s' }}>
+      <div className="nav-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 56px' : '22px 56px', transition: 'padding 0.25s' }}>
         <button onClick={() => window.scrollTo({top:0,behavior:'smooth'})} style={{ fontFamily: T.cond, fontSize: 20, fontWeight: 700, letterSpacing: '0.02em', color: T.fg }}>
           Julia Raposo<span style={{ color: T.green }}>.</span>
         </button>
@@ -406,9 +436,9 @@ function Hero({ lang, onBookClick, onAboutClick }) {
     <header style={{ position: 'relative', background: T.bg, padding: '30px 56px 60px' }} className="hero-wrap">
       <div style={{ paddingBottom: 20, borderBottom: `1px solid ${T.line}`, display: 'flex', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.soft, fontWeight: 500, flexWrap: 'wrap', gap: '8px 20px' }}>
         <span>{c.eyebrow}</span>
-        <span>♦ Mercado Central · Bocado · Petí · MAM</span>
+        <span>Mercado Central · Bocado · Petí · MAM</span>
       </div>
-      <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 50, alignItems: 'center', paddingTop: 50 }}>
+      <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, alignItems: 'center', paddingTop: 50 }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: T.green, fontWeight: 600, marginBottom: 18 }}>
             Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
@@ -434,7 +464,7 @@ function Hero({ lang, onBookClick, onAboutClick }) {
           </div>
         </div>
         <div className="hero-img" style={{ position: 'relative' }}>
-          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: 460, objectFit: 'cover', display: 'block' }} />
+          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: '520px', objectFit: 'cover', display: 'block', borderRadius: '8px' }} />
         </div>
       </div>
     </header>
@@ -445,11 +475,12 @@ function Hero({ lang, onBookClick, onAboutClick }) {
 function Marquee() {
   return (
     <div style={{ background: T.green, color: T.salmon, padding: '22px 0', overflow: 'hidden', borderTop: `1px solid ${T.greenDeep}`, borderBottom: `1px solid ${T.greenDeep}` }}>
-      <div style={{ display: 'flex', gap: 42, whiteSpace: 'nowrap', fontFamily: T.cond, fontSize: 38, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', animation: 'mq 32s linear infinite' }}>
+      <div className="marquee-text" style={{ display: 'flex', gap: 42, whiteSpace: 'nowrap', fontFamily: T.cond, fontSize: 38, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', animation: 'mq 32s linear infinite' }}>
         {[0,1].map(k => (
           <React.Fragment key={k}>
             <span>G20 · 2024</span><span style={{color:T.bg}}>◆</span>
             <span style={{fontStyle:'italic',fontFamily:T.serifIt,textTransform:'none',fontWeight:500}}>BRICS · 2025</span><span style={{color:T.bg}}>◆</span>
+            <span>BLOOMBERG BRASIL</span><span style={{color:T.bg}}>◆</span>
             <span>MAM RIO</span><span style={{color:T.bg}}>◆</span>
             <span>BOCADO · PETÍ</span><span style={{color:T.bg}}>◆</span>
             <span>MERCADO CENTRAL</span><span style={{color:T.bg}}>◆</span>
@@ -464,11 +495,14 @@ function Marquee() {
 // ── ABOUT ────────────────────────────────────────────────────
 function About({ lang }) {
   const c = COPY.about[lang];
+  const [expanded, setExpanded] = React.useState(false);
+  
   return (
     <section className="section-pad" style={{ padding: '90px 56px', background: T.bg, color: T.fg }}>
       <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.soft, marginBottom: 50 }}>
         {lang==='pt' ? 'Chef executiva' : 'Executive chef'} <span style={{ color: T.green }}>·</span> Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
       </div>
+      
       <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, marginBottom: 70 }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
@@ -477,11 +511,41 @@ function About({ lang }) {
             <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo</span>
           </h2>
         </div>
+        
         <div style={{ paddingTop: 30 }}>
-          {c.body.map((p,i) => <p key={i} style={{ fontSize: 17, lineHeight: 1.6, marginBottom: 22 }}>{p}</p>)}
+          {c.intro.map((p,i) => (
+            <p key={i} style={{ fontSize: 17, lineHeight: 1.7, marginBottom: 22, color: T.fg }} dangerouslySetInnerHTML={{ __html: p }} />
+          ))}
+          
+          {expanded && (
+            <div style={{ marginTop: 32, paddingTop: 32, borderTop: `1px solid ${T.line}` }}>
+              {c.body.map((p,i) => (
+                <p key={i} style={{ fontSize: 16, lineHeight: 1.7, marginBottom: 20, color: T.fg, opacity: 0.9 }} dangerouslySetInnerHTML={{ __html: p }} />
+              ))}
+            </div>
+          )}
+          
+          <button 
+            onClick={() => setExpanded(!expanded)}
+            style={{ 
+              marginTop: 28, 
+              fontFamily: T.mono, 
+              fontSize: 12, 
+              letterSpacing: '0.12em', 
+              textTransform: 'uppercase', 
+              color: T.green, 
+              fontWeight: 600,
+              paddingBottom: 4,
+              borderBottom: `1px solid ${T.green}`,
+              transition: 'opacity 0.2s'
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
+            {expanded ? (lang === 'pt' ? '← Mostrar menos' : '← Show less') : (lang === 'pt' ? 'Ler trajetória completa →' : 'Read full journey →')}
+          </button>
         </div>
       </div>
-      {/* CORREÇÃO 1: 5 células numa linha */}
+      
       <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', border: `1px solid ${T.line}` }}>
         {c.stats.map((s,i) => (
           <div key={i} style={{ padding: '28px 20px', borderRight: i<3 ? `1px solid ${T.line}` : 'none', color: T.fg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 120 }}>
@@ -549,8 +613,12 @@ function Gallery({ lang }) {
           const photos = ['prato1','prato2','prato3'];
           const photo = photos[i % photos.length];
           return (
-            <div key={i} style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%' }}>
-              <img src={`https://AFPMM.github.io/juliaraposo.com/${photo}.JPEG`} alt={lang === 'pt' ? `Foto do prato ${i + 1}` : `Dish photo ${i + 1}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div key={i} className="img-placeholder" style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%', '--ph-bg': '#234C57', '--ph-stripe': 'rgba(245,239,226,0.08)', '--ph-label': 'rgba(245,239,226,0.7)', '--ph-label-bg': 'rgba(27,58,75,0.3)' }}>
+              {i < 3 ? (
+                <img src={`https://AFPMM.github.io/juliaraposo.com/${photo}.JPEG`} alt={lang === 'pt' ? `Foto do prato ${i + 1}` : `Dish photo ${i + 1}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              ) : (
+                <div className="ph-label">{lang === 'pt' ? `Foto ${i + 1}` : `Photo ${i + 1}`}</div>
+              )}
             </div>
           );
         })}
@@ -615,19 +683,10 @@ function Booking({ lang }) {
               </a>
             </div>
           </div>
-          
-          <div style={{ marginTop: 24 }}>
-            <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.08em', opacity: 0.6, color: T.fg, marginBottom: 12 }}>
-              {lang === 'pt' ? '© 2026 Julia Raposo · Chefe Executiva & Consultoria' : '© 2026 Julia Raposo · Executive Chef & Consulting'}
-            </div>
-            <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.08em', opacity: 0.6, color: T.fg }}>
-              {lang === 'pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : 'Signature cuisine, Brazilian roots, Italian technique.'}
-            </div>
-          </div>
         </div>
         
         <div className="booking-img" style={{ position: 'relative' }}>
-          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: 460, objectFit: 'cover', display: 'block' }} />
+          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: '520px', objectFit: 'cover', display: 'block', borderRadius: '8px' }} />
         </div>
       </div>
     </section>
@@ -635,33 +694,13 @@ function Booking({ lang }) {
 }
 
 // ── FOOTER ───────────────────────────────────────────────────
-function Footer({ lang, setLang, sections }) {
+function Footer({ lang }) {
   const c = COPY.footer[lang];
-  const goTo = (i) => {
-    const el = sections.current[i + 1];
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
   
   return (
-    <footer style={{ background: T.bg, borderTop: `1px solid ${T.line}`, padding: '22px 56px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
-        <button onClick={() => window.scrollTo({top:0,behavior:'smooth'})} style={{ fontFamily: T.cond, fontSize: 20, fontWeight: 700, letterSpacing: '0.02em', color: T.fg }}>
-          Julia Raposo<span style={{ color: T.green }}>.</span>
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-          <ul style={{ listStyle: 'none', display: 'flex', gap: 28, margin: 0, padding: 0 }}>
-            {COPY.nav[lang].map((label, i) => (
-              <li key={label}>
-                <button onClick={() => goTo(i)} style={{ fontSize: 13, fontWeight: 500, paddingBottom: 4, color: T.fg, borderBottom: '1px solid transparent', transition: 'all 0.18s' }}
-                  onMouseEnter={e => e.currentTarget.style.borderBottomColor = T.green}
-                  onMouseLeave={e => e.currentTarget.style.borderBottomColor = 'transparent'}>
-                  {label}
-                </button>
-              </li>
-            ))}
-          </ul>
-          <LangToggle lang={lang} setLang={setLang} />
-        </div>
+    <footer style={{ background: T.bg, borderTop: `1px solid ${T.line}`, padding: '30px 56px', textAlign: 'center' }}>
+      <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.08em', opacity: 0.6, color: T.fg }}>
+        {c.copy}
       </div>
     </footer>
   );
@@ -694,7 +733,7 @@ function App() {
       <div ref={setRef(2)}><Services lang={lang} /></div>
       <div ref={setRef(3)}><Gallery lang={lang} /></div>
       <div ref={setRef(4)}><Booking lang={lang} /></div>
-      <Footer lang={lang} setLang={setLang} sections={sectionRefs} />
+      <Footer lang={lang} />
     </div>
   );
 }
