@@ -149,12 +149,29 @@ a { color: inherit; text-decoration: none; }
   
   .hero-actions { 
     display: flex !important;
-    flex-wrap: wrap !important;
+    flex-direction: column !important;
     gap: 12px !important;
   }
   .hero-actions > button {
-    flex: 1 1 calc(50% - 6px) !important;
-    min-width: 150px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Booking section */
+  .booking-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  
+  .booking-img {
+    order: -1;
+    margin: 0 -20px !important;
+  }
+  
+  .booking-img img {
+    height: 240px !important;
+    width: calc(100% + 40px) !important;
+    max-width: none !important;
   }
   
   /* Footer */
@@ -216,8 +233,8 @@ const T = {
 // ── COPY ─────────────────────────────────────────────────────
 const COPY = {
   nav: {
-    pt: ['Sobre a Chef', 'Serviços', 'Pratos', 'Reservar'],
-    en: ['About the Chef', 'Services', 'Dishes', 'Book']
+    pt: ['Sobre a Chef', 'Serviços', 'Portfólio', 'Reservar'],
+    en: ['About the Chef', 'Services', 'Portfolio', 'Book']
   },
   hero: {
     pt: { eyebrow: 'Chefe Executiva · Rio de Janeiro', sub: 'Cozinha autoral que celebra os ingredientes brasileiros com a precisão da cozinha italiana. Menus assinados, eventos corporativos e consultoria gastronômica.', cta: 'Reservar uma experiência', ghost: 'Conhecer a chef' },
@@ -253,12 +270,12 @@ const COPY = {
     }
   },
   services: {
-    pt: { kicker: 'Serviços', items: [
+    pt: { kicker: 'O que fazemos', items: [
       { name: 'EVENTOS CORPORATIVOS', body: 'Experiências gastronómicas para marcas, empresas e encontros de grande escala — da concepção à execução.' },
       { name: 'CATERING AUTORAL', body: 'Catering com identidade própria, menus sazonais e experiências desenhadas em cada detalhe.' },
       { name: 'CONSULTORIA', body: 'Estratégia e desenvolvimento para restaurantes e operações gastronómicas contemporâneas.' }
     ]},
-    en: { kicker: 'Services', items: [
+    en: { kicker: 'What we do', items: [
       { name: 'CORPORATE EVENTS', body: 'Gastronomic experiences for brands, companies and large-scale gatherings — from concept to execution.' },
       { name: 'SIGNATURE CATERING', body: 'Catering with its own identity, seasonal menus and experiences designed in every detail.' },
       { name: 'CONSULTING', body: 'Strategy and development for restaurants and contemporary food operations.' }
@@ -347,7 +364,7 @@ function Nav({ lang, setLang, scrolled, sections }) {
     <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: scrolled ? 'rgba(245,239,226,0.92)' : T.bg, backdropFilter: scrolled ? 'blur(14px)' : 'none', borderBottom: `1px solid ${scrolled ? T.line : 'transparent'}`, transition: 'all 0.25s' }}>
       <div className="nav-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 44px' : '22px 44px', transition: 'padding 0.25s' }}>
         <button onClick={() => window.scrollTo({top:0,behavior:'smooth'})} style={{ fontFamily: T.cond, fontSize: 20, fontWeight: 700, letterSpacing: '0.02em', color: T.fg }}>
-          Julia Raposo<span style={{ color: '#B8860B' }}>.</span>
+          Julia Raposo<span style={{ color: T.green }}>.</span>
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
           <ul className="nav-links" style={{ listStyle: 'none', display: 'flex', gap: 28, margin: 0, padding: 0 }}>
@@ -394,7 +411,7 @@ function Hero({ lang, onBookClick, onAboutClick }) {
       <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 50, alignItems: 'center', paddingTop: 50 }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: T.green, fontWeight: 600, marginBottom: 18 }}>
-            {lang==='pt' ? 'Rio de Janeiro · Brasil' : 'Rio de Janeiro · Brazil'}
+            Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
           </div>
           <h1 className="heading-xl" style={{ fontFamily: T.cond, fontSize: 'clamp(56px,8vw,120px)', lineHeight: 0.88, letterSpacing: '-0.02em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
             <span style={{ color: T.green }}>JULIA</span><br />
@@ -449,6 +466,9 @@ function About({ lang }) {
   const c = COPY.about[lang];
   return (
     <section className="section-pad" style={{ padding: '90px 56px', background: T.bg, color: T.fg }}>
+      <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.soft, marginBottom: 50 }}>
+        {lang==='pt' ? 'Chef executiva' : 'Executive chef'} <span style={{ color: T.green }}>·</span> Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
+      </div>
       <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, marginBottom: 70 }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
@@ -456,7 +476,6 @@ function About({ lang }) {
             JULIA<br />
             <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo</span>
           </h2>
-          <div style={{ marginTop: 22, fontFamily: T.mono, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.soft }}>— {c.role} · RJ · BR</div>
         </div>
         <div style={{ paddingTop: 30 }}>
           {c.body.map((p,i) => <p key={i} style={{ fontSize: 17, lineHeight: 1.6, marginBottom: 22 }}>{p}</p>)}
@@ -517,7 +536,7 @@ function Gallery({ lang }) {
     <section style={{ padding: '90px 56px', background: T.bg }}>
       <div style={{ marginBottom: 60 }}>
         <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>
-          {lang==='pt' ? 'Pratos' : 'Dishes'}
+          {lang==='pt' ? 'Portfólio' : 'Portfolio'}
         </div>
         <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
           {lang==='pt' ? 'NO' : 'ON THE'}<br />
@@ -545,13 +564,13 @@ function Booking({ lang }) {
   const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : 'Hi Julia! I would like to know more about your services.');
   const waUrl = `https://wa.me/5521982792817?text=${waMsg}`;
   const c = lang === 'pt' ? {
-    kicker: '04 — Reservar',
+    kicker: 'Reservar',
     title: 'Conte-nos a sua ideia',
     cta: 'Iniciar conversa',
     email: 'juliaraposodacamara@gmail.com',
     phone: '+55 21 98279-2817'
   } : {
-    kicker: '04 — Book',
+    kicker: 'Book',
     title: 'Tell us your idea',
     cta: 'Start conversation',
     email: 'juliaraposodacamara@gmail.com',
@@ -560,36 +579,42 @@ function Booking({ lang }) {
   
   return (
     <section style={{ background: T.bg, color: T.fg, padding: '90px 56px', borderTop: `1px solid ${T.line}` }}>
-      <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
-        <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 24, fontWeight: 600 }}>
-          {c.kicker}
-        </div>
-        
-        <h2 style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(40px,6vw,64px)', lineHeight: 1.1, letterSpacing: '-0.03em', fontWeight: 500, margin: '0 0 48px', color: T.fg, whiteSpace: 'normal', maxWidth: '100%' }}>
-          {c.title}
-        </h2>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 40 }}>
-          <a href={`mailto:${c.email}`} style={{ fontFamily: T.sans, fontSize: 16, color: T.fg, opacity: 0.8, transition: 'opacity 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}>
-            {c.email}
-          </a>
+      <div className="booking-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, alignItems: 'center' }}>
+        <div>
+          <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 24, fontWeight: 600 }}>
+            {c.kicker}
+          </div>
           
-          <a href={`tel:${c.phone.replace(/\s/g, '')}`} style={{ fontFamily: T.mono, fontSize: 16, color: T.fg, opacity: 0.8, letterSpacing: '0.02em', transition: 'opacity 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}>
-            {c.phone}
+          <h2 style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(40px,6vw,64px)', lineHeight: 1.1, letterSpacing: '-0.03em', fontWeight: 500, margin: '0 0 48px', color: T.fg }}>
+            {c.title}
+          </h2>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 40 }}>
+            <a href={`mailto:${c.email}`} style={{ fontFamily: T.sans, fontSize: 16, color: T.fg, opacity: 0.8, transition: 'opacity 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}>
+              {c.email}
+            </a>
+            
+            <a href={`tel:${c.phone.replace(/\s/g, '')}`} style={{ fontFamily: T.mono, fontSize: 16, color: T.fg, opacity: 0.8, letterSpacing: '0.02em', transition: 'opacity 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}>
+              {c.phone}
+            </a>
+          </div>
+          
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" 
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 14, padding: '20px 36px', background: T.green, color: T.bg, fontFamily: T.mono, fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, textDecoration: 'none', transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = T.greenDeep; }}
+            onMouseLeave={e => { e.currentTarget.style.background = T.green; }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            {c.cta}
           </a>
         </div>
         
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" 
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 14, padding: '20px 36px', background: T.green, color: T.bg, fontFamily: T.mono, fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, textDecoration: 'none', transition: 'all 0.2s' }}
-          onMouseEnter={e => { e.currentTarget.style.background = T.greenDeep; }}
-          onMouseLeave={e => { e.currentTarget.style.background = T.green; }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          {c.cta}
-        </a>
+        <div className="booking-img" style={{ position: 'relative' }}>
+          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: 460, objectFit: 'cover', display: 'block' }} />
+        </div>
       </div>
     </section>
   );
@@ -603,12 +628,14 @@ function Footer({ lang }) {
     <footer className="footer-wrap" style={{ background: T.fg, color: T.bg, padding: '40px 56px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}>
         <div style={{ fontFamily: T.cond, fontSize: 20, lineHeight: 1, fontWeight: 700, textTransform: 'uppercase', color: T.bg }}>
-          JR<span style={{ color: T.green }}>.</span>
+          Julia Raposo<span style={{ color: T.green }}>.</span>
         </div>
-        <div style={{ textAlign: 'right', minWidth: 0, fontFamily: T.mono, fontSize: 12, letterSpacing: '0.08em', opacity: 0.8, lineHeight: 1.7 }}>
-          <div>{c.tagline}</div>
-          <div style={{ marginTop: 10 }}>{c.copy}</div>
+        <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.08em', opacity: 0.8 }}>
+          {c.copy}
         </div>
+      </div>
+      <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.08em', opacity: 0.8, marginTop: 20 }}>
+        {c.tagline}
       </div>
     </footer>
   );
