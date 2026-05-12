@@ -57,6 +57,7 @@ a { color: inherit; text-decoration: none; }
   .hero-img img { 
     height: 240px !important;
     width: calc(100% + 40px) !important;
+    max-width: none !important;
     object-fit: cover !important;
   }
   
@@ -276,7 +277,7 @@ const COPY = {
   },
   footer: {
     pt: { tagline: 'Cozinha autoral, raiz brasileira, técnica italiana.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Chefe Executiva & Consultoria' },
-    en: { tagline: 'Signature cooking, Brazilian roots, Italian accent.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Executive Chef & Consulting' }
+    en: { tagline: 'Signature cuisine, Brazilian roots, Italian technique.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Executive Chef & Consulting' }
   }
 };
 
@@ -357,7 +358,7 @@ function Hero({ lang, onBookClick, onAboutClick }) {
             <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo.</span>
           </h1>
           <div style={{ marginTop: 24, fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(17px,1.8vw,24px)', lineHeight: 1.3, letterSpacing: '-0.015em', color: T.fg, maxWidth: 560 }}>
-            {lang==='pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : 'Signature cooking, Brazilian roots, Italian accent.'}
+            {lang==='pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : 'Signature cuisine, Brazilian roots, Italian technique.'}
           </div>
           <div style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <button onClick={onBookClick} style={{ padding: '16px 24px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, background: T.green, color: T.bg, display: 'inline-flex', alignItems: 'center', gap: 12, transition: 'background 0.18s' }}
@@ -489,38 +490,6 @@ function Gallery({ lang }) {
   );
 }
 
-// ── PRESS ────────────────────────────────────────────────────
-function Press({ lang }) {
-  const c = COPY.press[lang];
-  const lineCol = 'rgba(250,248,242,0.16)';
-  return (
-    <section style={{ padding: '90px 56px', background: T.fg, color: T.bg }}>
-      <div style={{ marginBottom: 60 }}>
-        <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.salmon, marginBottom: 20, fontWeight: 600 }}>{c.kicker}</div>
-        <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.salmon }}>
-          {lang==='pt' ? 'NA' : 'IN THE'}<br />
-          <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.bg }}>{lang==='pt' ? 'imprensa' : 'press'}</span>
-        </h2>
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)' }}>
-        {c.items.map((p,i) => {
-          const isRight = i%2===1;
-          return (
-            <div key={i} style={{ padding: '34px 38px', borderTop: `1px solid ${lineCol}`, borderRight: !isRight ? `1px solid ${lineCol}` : 'none', borderBottom: i>=c.items.length-2 ? `1px solid ${lineCol}` : 'none', display: 'grid', gap: 14 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.7 }}>{p.date}</div>
-                <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', border: `1px solid ${T.salmon}`, color: T.salmon, padding: '4px 9px', borderRadius: 999, fontWeight: 600 }}>{p.tag}</div>
-              </div>
-              <div style={{ fontFamily: T.cond, fontSize: 26, lineHeight: 1.1, fontWeight: 700, textTransform: 'uppercase' }}>{p.source}</div>
-              <div style={{ fontFamily: '"Bricolage Grotesque"', fontSize: 20, lineHeight: 1.3, letterSpacing: '-0.015em', fontStyle: 'italic', fontWeight: 400 }}>{p.headline}</div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
 // ── BOOKING ──────────────────────────────────────────────────
 function Booking({ lang }) {
   const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : 'Hi Julia! I would like to know more about your services.');
@@ -546,7 +515,7 @@ function Booking({ lang }) {
           {c.kicker}
         </div>
         
-        <h2 style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(40px,6vw,64px)', lineHeight: 1.1, letterSpacing: '-0.03em', fontWeight: 500, margin: '0 0 48px', color: T.fg }}>
+        <h2 style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(40px,6vw,64px)', lineHeight: 1.1, letterSpacing: '-0.03em', fontWeight: 500, margin: '0 0 48px', color: T.fg, whiteSpace: 'normal', maxWidth: '100%' }}>
           {c.title}
         </h2>
         
@@ -584,21 +553,6 @@ function Footer({ lang }) {
     <footer className="footer-wrap" style={{ background: T.fg, color: T.bg, padding: '70px 56px 32px' }}>
       <div style={{ fontFamily:T.cond, fontSize:'clamp(52px,10vw,160px)', lineHeight:0.86, fontWeight:700, textTransform:'uppercase', letterSpacing:'-0.015em', marginBottom:28, color:T.bg }}>
         JULIA <span style={{ fontFamily:'"Bricolage Grotesque"', fontStyle:'italic', fontWeight:500, textTransform:'none', letterSpacing:'-0.04em', color:T.green }}>raposo.</span>
-      </div>
-      <div style={{ fontFamily:'"Bricolage Grotesque"', fontStyle:'italic', fontSize:20, lineHeight:1.3, opacity:0.75, marginBottom:36, maxWidth:500 }}>
-        {c.tagline}
-      </div>
-      <div className="footer-info" style={{ fontFamily:T.mono, fontSize:13, letterSpacing:'0.06em', opacity:0.85, marginBottom:28, display:'flex', flexWrap:'wrap', gap:'0 0', lineHeight:2.2 }}>
-        <span>{c.ig}</span>
-        <span className="footer-dot" style={{opacity:0.35,margin:'0 14px'}}>·</span>
-        <span>{c.email}</span>
-        <span className="footer-dot" style={{opacity:0.35,margin:'0 14px'}}>·</span>
-        <span>{c.phone}</span>
-        <span className="footer-dot" style={{opacity:0.35,margin:'0 14px'}}>·</span>
-        <span>{c.addr}</span>
-      </div>
-      <div style={{ fontFamily:T.mono, fontSize:12, letterSpacing:'0.08em', opacity:0.55, marginBottom:44 }}>
-        Mercado Central · Bocado · Petí · Cantina MAM
       </div>
       <div style={{ paddingTop:26, borderTop:'1px solid rgba(250,248,242,0.14)', display:'flex', flexWrap:'wrap', justifyContent:'space-between', gap:8, fontFamily:T.mono, fontSize:11, letterSpacing:'0.06em', opacity:0.6 }}>
         <span>{c.copy}</span>
