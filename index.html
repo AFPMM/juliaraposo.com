@@ -288,13 +288,18 @@ const COPY = {
     en: {
       kicker: 'About', role: 'Executive Chef',
       intro: [
-        'Internationally trained at the prestigious Alma – Scuola di Alta Formazione in Cucina in Italy, with experience in Michelin-starred restaurants. Led the kitchens of the G20 and BRICS summits and the Bloomberg Brasil event, highlighting Brazilian gastronomy with innovation and commitment to sustainability.',
-        'Currently a partner at Mercado Central, where she leads Bocado and the Petí bistro. Signs the menu at Cantina do MAM and Canastra Pizzaria, and offers specialized consulting in restaurant management, catering, and kitchen setup.',
-        'With a trajectory that combines international technique, experience in starred establishments, performance at major events, and business vision, Júlia Raposo establishes herself as a complete professional, capable of transforming gastronomic projects into true experiences of flavor and success.'
+        'Internationally trained at the prestigious <strong>Alma – Scuola di Alta Formazione in Cucina</strong> in <strong>Italy</strong>, with experience in <strong>Michelin-starred restaurants</strong>. Led the kitchens of the <strong>G20 and BRICS summits</strong> and the <strong>Bloomberg Brasil</strong> event, highlighting Brazilian gastronomy with innovation and commitment to sustainability.',
+        'Currently a partner at <strong>Mercado Central</strong>, where she leads <strong>Bocado</strong> and the <strong>Petí</strong> bistro. Signs the menu at <strong>Cantina do MAM</strong> and <strong>Canastra Pizzaria</strong>, and offers specialized consulting in restaurant management, catering, and kitchen setup.',
+        'With a trajectory that combines <strong>international technique</strong>, experience in <strong>starred establishments</strong>, performance at <strong>major events</strong>, and <strong>business vision</strong>, Júlia Raposo establishes herself as a complete professional, capable of transforming gastronomic projects into true experiences of flavor and success.'
       ],
       body: [
-        'Internationally trained, with deep experience across Michelin-starred kitchens in Italy and Brazil. Led the kitchens of the G20 (Nov 2024) and BRICS (Mar 2025) summits, spotlighting Brazilian ingredients with innovation and a commitment to food sustainability.',
-        'Currently a partner at Mercado Central, leading the Bocado and Petí restaurants, and signs the menu at the Museu de Arte Moderna canteen in Rio.'
+        'The passion for gastronomy has always been part of chef <strong>Júlia Raposo</strong>\'s life, but it was in 2012, in <strong>London</strong>, that she took her first professional steps by enrolling at the <strong>Cookery School at Little Portland Street</strong>.',
+        'Back in Brazil, she graduated as an <strong>Executive Chef at Senac</strong> and worked in renowned restaurants in Rio\'s culinary scene. At the <strong>Gastromotiva NGO</strong>, where she worked for a year, she deepened her knowledge in full utilization of ingredients and minimum waste policy.',
+        'In pursuit of excellence, she moved to <strong>Italy</strong> and graduated from the prestigious <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, considered one of the most renowned gastronomy schools in Europe. She traveled through different Italian regions – <strong>Milan</strong>, <strong>Parma</strong>, and <strong>Puglia</strong> – working in <strong>starred restaurants</strong> and specializing in Italian cuisine technique and philosophy, always prioritizing creativity, fresh ingredients, and respect for seasonality.',
+        'Back in Rio de Janeiro in 2020, after the start of the pandemic, Júlia continued to lead prominent kitchens, including restaurants in Barra da Tijuca and Village Mall. Recently, she was in command of the gastronomy of important international events hosted in Rio de Janeiro, such as the <strong>G20 Summit</strong>, the <strong>BRICS Summit</strong>, and the <strong>Bloomberg Brasil</strong> event.',
+        'Júlia also has her own businesses at <strong>Mercado Central</strong>: the restaurant <strong>Bocado</strong> and the bistro <strong>Petí</strong>, projects that reflect her contemporary, creative, and affective gastronomic identity.',
+        'Currently, the chef signs the menu at <strong>Cantina do MAM</strong>, at the <strong>Museum of Modern Art of Rio de Janeiro</strong>, and at <strong>Canastra Pizzaria</strong>. Additionally, she offers specialized consulting in restaurant management, catering, and kitchen setup — from layout to menu, including staff training.',
+        'With a trajectory that combines <strong>international technique</strong>, experience in <strong>starred establishments</strong>, performance at <strong>major events</strong>, and <strong>business vision</strong>, Júlia Raposo establishes herself as a complete professional, capable of transforming gastronomic projects into true experiences of flavor and success.'
       ],
       stats: [
         { n: '15+', l: 'years cooking' },
@@ -632,8 +637,9 @@ function Services({ lang }) {
       </div>
       <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
         {c.items.map((s,i) => (
-          <div key={i} className="service-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', cursor: 'pointer' }}>
-            <div className="service-title" style={{ fontFamily: T.cond, fontSize: 18, lineHeight: 1.05, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.name}</div>
+          <div key={i} className="service-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <div className="service-title" style={{ fontFamily: T.cond, fontSize: 18, lineHeight: 1.05, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 12 }}>{s.name}</div>
+            <p style={{ fontFamily: T.sans, fontSize: 14, lineHeight: 1.75, margin: 0, opacity: 0.85 }}>{s.body}</p>
           </div>
         ))}
       </div>
