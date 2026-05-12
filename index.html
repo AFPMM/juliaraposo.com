@@ -639,7 +639,7 @@ function Services({ lang }) {
         {c.items.map((s,i) => (
           <div key={i} className="service-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
             <div className="service-title" style={{ fontFamily: T.cond, fontSize: 18, lineHeight: 1.05, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 12 }}>{s.name}</div>
-            <p style={{ fontFamily: T.sans, fontSize: 14, lineHeight: 1.75, margin: 0, opacity: 0.85 }}>{s.body}</p>
+            <p style={{ fontFamily: T.sans, fontSize: 14, lineHeight: 1.75, margin: 0, opacity: 1, color: T.fg }}>{s.body}</p>
           </div>
         ))}
       </div>
