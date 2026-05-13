@@ -11,6 +11,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: #F5EFE2; }
 body { font-family: 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+strong { font-weight: 700; color: #1B3A4B; }
 button { font: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
 input, textarea, select { font: inherit; color: inherit; }
 img { max-width: 100%; display: block; }
@@ -18,7 +19,7 @@ a { color: inherit; text-decoration: none; }
 .img-placeholder { position: relative; overflow: hidden; background: var(--ph-bg, #ddd); }
 .img-placeholder::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, transparent 0 14px, var(--ph-stripe, rgba(0,0,0,0.06)) 14px 15px); pointer-events: none; }
 .img-placeholder .ph-label { position: absolute; bottom: 12px; left: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ph-label, rgba(0,0,0,0.5)); background: var(--ph-label-bg, rgba(255,255,255,0.7)); padding: 4px 8px; border-radius: 2px; backdrop-filter: blur(4px); }
-@keyframes mq { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@keyframes mq { from { transform: translateX(0) } to { transform: translateX(-25%) } }
 
 @media (min-width: 769px) { .hamburger { display: none !important; } }
 .service-card {
@@ -53,6 +54,21 @@ a { color: inherit; text-decoration: none; }
 .service-card:hover p,
 .service-card:focus-visible p {
   opacity: 0.95;
+}
+.stat-card:hover,
+.stat-card:focus-visible {
+  background: #1B3A4B !important;
+  transform: translateY(-2px);
+  color: #F5EFE2 !important;
+}
+.stat-card:hover .stat-n,
+.stat-card:focus-visible .stat-n {
+  color: #F5EFE2 !important;
+}
+.stat-card:hover .stat-l,
+.stat-card:focus-visible .stat-l {
+  color: rgba(245,239,226,0.9) !important;
+  opacity: 0.95 !important;
 }
 @media (max-width: 768px) {
   /* Prevent all horizontal overflow */
@@ -92,6 +108,7 @@ a { color: inherit; text-decoration: none; }
     width: calc(100% + 40px) !important;
     max-width: none !important;
     object-fit: cover !important;
+    border-radius: 0 !important;
   }
   
   /* About section */
@@ -124,8 +141,8 @@ a { color: inherit; text-decoration: none; }
   }
   
   .stat-n { 
-    font-size: 22px !important;
-    line-height: 1.1 !important;
+    font-size: 20px !important;
+    line-height: 1.15 !important;
     white-space: normal !important;
   }
   
@@ -144,8 +161,8 @@ a { color: inherit; text-decoration: none; }
   /* Gallery - 1 coluna em mobile */
   .dishes-grid { 
     grid-template-columns: 1fr !important;
-    grid-auto-rows: 240px !important;
-    gap: 12px !important;
+    grid-auto-rows: 180px !important;
+    gap: 10px !important;
   }
   
   .dishes-grid > div { 
@@ -178,6 +195,7 @@ a { color: inherit; text-decoration: none; }
     height: 240px !important;
     width: calc(100% + 40px) !important;
     max-width: none !important;
+    border-radius: 0 !important;
   }
   
   /* Footer */
@@ -200,6 +218,11 @@ a { color: inherit; text-decoration: none; }
   section {
     padding-left: 20px !important;
     padding-right: 20px !important;
+  }
+  
+  /* Marquee mobile */
+  .marquee-text {
+    font-size: 24px !important;
   }
 }
 </style>
@@ -230,50 +253,82 @@ const T = {
 const COPY = {
   nav: {
     pt: ['Sobre a Chef', 'Serviços', 'Portfólio', 'Reservar'],
-    en: ['About the Chef', 'Services', 'Portfolio', 'Book']
+    en: ['About the Chef', 'Services', 'Portfolio', 'Book'],
+    it: ['Sulla Chef', 'Servizi', 'Portfolio', 'Prenota']
   },
   hero: {
     pt: { eyebrow: 'Chefe Executiva · Rio de Janeiro', sub: 'Cozinha autoral que celebra os ingredientes brasileiros com a precisão da cozinha italiana. Menus assinados, eventos corporativos e consultoria gastronômica.', cta: 'Reservar uma experiência', ghost: 'Conhecer a chef' },
-    en: { eyebrow: 'Executive Chef · Rio de Janeiro', sub: 'Signature cooking that celebrates Brazilian ingredients with the precision of Italian craft. Bespoke menus, corporate events, and restaurant consulting.', cta: 'Book an experience', ghost: 'Meet the chef' }
+    en: { eyebrow: 'Executive Chef · Rio de Janeiro', sub: 'Signature cooking that celebrates Brazilian ingredients with the precision of Italian craft. Bespoke menus, corporate events, and restaurant consulting.', cta: 'Book an experience', ghost: 'Meet the chef' },
+    it: { eyebrow: 'Chef Esecutiva · Rio de Janeiro', sub: 'Cucina d\'autore che celebra gli ingredienti brasiliani con la precisione della cucina italiana. Menù firmati, eventi aziendali e consulenza gastronomica.', cta: 'Prenota un\'esperienza', ghost: 'Conosci la chef' }
   },
   about: {
     pt: {
       kicker: 'A Chef', role: 'Chefe Executiva',
       intro: [
-        'Formação internacional com passagem pela prestigiada Alma – Scuola di Alta Formazione in Cucina, na Itália, e experiência em restaurantes estrelados Michelin. Comandou as cozinhas das cúpulas do G20 e BRICS, destacando a gastronomia brasileira com inovação e compromisso com a sustentabilidade.',
-        'Atualmente é sócia do Mercado Central, onde lidera o Bocado e a lanchonete Petí. Assina o cardápio da Cantina do MAM e da Canastra Pizzaria, além de oferecer consultoria especializada em gestão de restaurantes, catering e montagem de cozinhas.'
+        'Formação internacional com passagem pela prestigiada <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, na <strong>Itália</strong>, e experiência em <strong>restaurantes estrelados Michelin</strong>. Comandou as cozinhas das <strong>cúpulas do G20 e BRICS</strong> e do evento da <strong>Bloomberg Brasil</strong>, destacando a gastronomia brasileira com inovação e compromisso com a sustentabilidade.',
+        'Atualmente é sócia do <strong>Mercado Central</strong>, onde lidera o <strong>Bocado</strong> e a lanchonete <strong>Petí</strong>. Assina o cardápio da <strong>Cantina do MAM</strong> e da <strong>Canastra Pizzaria</strong>, além de oferecer consultoria especializada em gestão de restaurantes, catering e montagem de cozinhas.',
+        'Com uma trajetória que une <strong>técnica internacional</strong>, experiência em <strong>casas estreladas</strong>, atuação em <strong>grandes eventos</strong> e <strong>visão de negócios</strong>, Júlia Raposo se consolida como uma profissional completa, capaz de transformar projetos gastronômicos em verdadeiras experiências de sabor e sucesso.'
       ],
       body: [
-        'A paixão pela gastronomia sempre fez parte da vida da chef Júlia Raposo, mas foi em 2012, em Londres, que ela deu os primeiros passos profissionais ao ingressar na Cookery School at Little Portland Street.',
-        'De volta ao Brasil, formou-se como Chef Executiva pelo Senac e atuou em restaurantes conceituados do cenário carioca. Na ONG Gastromotiva, onde trabalhou por um ano, aprofundou seus conhecimentos em aproveitamento integral dos alimentos e na política de desperdício mínimo.',
-        'Em busca de excelência, mudou-se para a Itália e formou-se na prestigiada Alma – Scuola di Alta Formazione in Cucina, considerada uma das escolas de gastronomia mais renomadas da Europa. Passou por diferentes regiões italianas – Milão, Parma e Puglia – trabalhando em restaurantes estrelados e se especializando na técnica e filosofia da cozinha italiana, sempre priorizando criatividade, ingredientes frescos e respeito à sazonalidade.',
-        'De volta ao Rio de Janeiro em 2020, após o início da pandemia, Júlia seguiu à frente de cozinhas de destaque, entre elas restaurantes na Barra da Tijuca e no Village Mall. Recentemente, esteve no comando gastronômico de importantes eventos internacionais sediados no Rio de Janeiro, como a Cúpula do G20, a Cúpula do BRICS e o evento da Bloomberg Brasil.',
-        'Júlia também tem seus próprios negócios no Mercado Central: o restaurante Bocado e a lanchonete Petí, projetos que refletem sua identidade gastronômica contemporânea, criativa e afetiva.',
-        'Atualmente, a chef assina o cardápio da Cantina do MAM, no Museu de Arte Moderna do Rio de Janeiro, e da Canastra Pizzaria. Além disso, oferece consultoria especializada em gestão de restaurantes, catering e montagem de cozinhas — do layout ao cardápio, incluindo treinamento de equipes.',
-        'Com uma trajetória que une técnica internacional, experiência em casas estreladas, atuação em grandes eventos e visão de negócios, Júlia Raposo se consolida como uma profissional completa, capaz de transformar projetos gastronômicos em verdadeiras experiências de sabor e sucesso.'
+        'A paixão pela gastronomia sempre fez parte da vida da chef <strong>Júlia Raposo</strong>, mas foi em 2012, em <strong>Londres</strong>, que ela deu os primeiros passos profissionais ao ingressar na <strong>Cookery School at Little Portland Street</strong>.',
+        'De volta ao Brasil, formou-se como <strong>Chef Executiva pelo Senac</strong> e atuou em restaurantes conceituados do cenário carioca. Na <strong>ONG Gastromotiva</strong>, onde trabalhou por um ano, aprofundou seus conhecimentos em aproveitamento integral dos alimentos e na política de desperdício mínimo.',
+        'Em busca de excelência, mudou-se para a <strong>Itália</strong> e formou-se na prestigiada <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, considerada uma das escolas de gastronomia mais renomadas da Europa. Passou por diferentes regiões italianas – <strong>Milão</strong>, <strong>Parma</strong> e <strong>Puglia</strong> – trabalhando em <strong>restaurantes estrelados</strong> e se especializando na técnica e filosofia da cozinha italiana, sempre priorizando criatividade, ingredientes frescos e respeito à sazonalidade.',
+        'De volta ao Rio de Janeiro em 2020, após o início da pandemia, Júlia seguiu à frente de cozinhas de destaque, entre elas restaurantes na Barra da Tijuca e no Village Mall. Recentemente, esteve no comando gastronômico de importantes eventos internacionais sediados no Rio de Janeiro, como a <strong>Cúpula do G20</strong>, a <strong>Cúpula do BRICS</strong> e o evento da <strong>Bloomberg Brasil</strong>.',
+        'Júlia também tem seus próprios negócios no <strong>Mercado Central</strong>: o restaurante <strong>Bocado</strong> e a lanchonete <strong>Petí</strong>, projetos que refletem sua identidade gastronômica contemporânea, criativa e afetiva.',
+        'Atualmente, a chef assina o cardápio da <strong>Cantina do MAM</strong>, no <strong>Museu de Arte Moderna do Rio de Janeiro</strong>, e da <strong>Canastra Pizzaria</strong>. Além disso, oferece consultoria especializada em gestão de restaurantes, catering e montagem de cozinhas — do layout ao cardápio, incluindo treinamento de equipes.',
+        'Com uma trajetória que une <strong>técnica internacional</strong>, experiência em <strong>casas estreladas</strong>, atuação em <strong>grandes eventos</strong> e <strong>visão de negócios</strong>, Júlia Raposo se consolida como uma profissional completa, capaz de transformar projetos gastronômicos em verdadeiras experiências de sabor e sucesso.'
       ],
       stats: [
         { n: '15+', l: 'anos de cozinha' },
-        { n: 'G20 · BRICS', l: 'cúpulas 2024 · 2025' },
+        { n: 'G20 · BRICS · BLOOMBERG', l: 'eventos 2024 · 2025' },
         { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
-        { n: 'MAM', l: 'cardápio assinado' }
+        { n: 'MAM', l: 'Chefe Consultora Estratégica' }
       ]
     },
     en: {
       kicker: 'About', role: 'Executive Chef',
       intro: [
-        'Internationally trained at the prestigious Alma – Scuola di Alta Formazione in Cucina in Italy, with experience in Michelin-starred restaurants. Led the kitchens of the G20 and BRICS summits, highlighting Brazilian gastronomy with innovation and commitment to sustainability.',
-        'Currently a partner at Mercado Central, where she leads Bocado and the Petí bistro. Signs the menu at Cantina do MAM and Canastra Pizzaria, and offers specialized consulting in restaurant management, catering, and kitchen setup.'
+        'Internationally trained at the prestigious <strong>Alma – Scuola di Alta Formazione in Cucina</strong> in <strong>Italy</strong>, with experience in <strong>Michelin-starred restaurants</strong>. Led the kitchens of the <strong>G20 and BRICS summits</strong> and the <strong>Bloomberg Brasil</strong> event, highlighting Brazilian gastronomy with innovation and commitment to sustainability.',
+        'Currently a partner at <strong>Mercado Central</strong>, where she leads <strong>Bocado</strong> and the <strong>Petí</strong> bistro. Signs the menu at <strong>Cantina do MAM</strong> and <strong>Canastra Pizzaria</strong>, and offers specialized consulting in restaurant management, catering, and kitchen setup.',
+        'With a trajectory that combines <strong>international technique</strong>, experience in <strong>starred establishments</strong>, performance at <strong>major events</strong>, and <strong>business vision</strong>, Júlia Raposo establishes herself as a complete professional, capable of transforming gastronomic projects into true experiences of flavor and success.'
       ],
       body: [
-        'Internationally trained, with deep experience across Michelin-starred kitchens in Italy and Brazil. Led the kitchens of the G20 (Nov 2024) and BRICS (Mar 2025) summits, spotlighting Brazilian ingredients with innovation and a commitment to food sustainability.',
-        'Currently a partner at Mercado Central, leading the Bocado and Petí restaurants, and signs the menu at the Museu de Arte Moderna canteen in Rio.'
+        'The passion for gastronomy has always been part of chef <strong>Júlia Raposo</strong>\'s life, but it was in 2012, in <strong>London</strong>, that she took her first professional steps by enrolling at the <strong>Cookery School at Little Portland Street</strong>.',
+        'Back in Brazil, she graduated as an <strong>Executive Chef at Senac</strong> and worked in renowned restaurants in Rio\'s culinary scene. At the <strong>Gastromotiva NGO</strong>, where she worked for a year, she deepened her knowledge in full utilization of ingredients and minimum waste policy.',
+        'In pursuit of excellence, she moved to <strong>Italy</strong> and graduated from the prestigious <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, considered one of the most renowned gastronomy schools in Europe. She traveled through different Italian regions – <strong>Milan</strong>, <strong>Parma</strong>, and <strong>Puglia</strong> – working in <strong>starred restaurants</strong> and specializing in Italian cuisine technique and philosophy, always prioritizing creativity, fresh ingredients, and respect for seasonality.',
+        'Back in Rio de Janeiro in 2020, after the start of the pandemic, Júlia continued to lead prominent kitchens, including restaurants in Barra da Tijuca and Village Mall. Recently, she was in command of the gastronomy of important international events hosted in Rio de Janeiro, such as the <strong>G20 Summit</strong>, the <strong>BRICS Summit</strong>, and the <strong>Bloomberg Brasil</strong> event.',
+        'Júlia also has her own businesses at <strong>Mercado Central</strong>: the restaurant <strong>Bocado</strong> and the bistro <strong>Petí</strong>, projects that reflect her contemporary, creative, and affective gastronomic identity.',
+        'Currently, the chef signs the menu at <strong>Cantina do MAM</strong>, at the <strong>Museum of Modern Art of Rio de Janeiro</strong>, and at <strong>Canastra Pizzaria</strong>. Additionally, she offers specialized consulting in restaurant management, catering, and kitchen setup — from layout to menu, including staff training.',
+        'With a trajectory that combines <strong>international technique</strong>, experience in <strong>starred establishments</strong>, performance at <strong>major events</strong>, and <strong>business vision</strong>, Júlia Raposo establishes herself as a complete professional, capable of transforming gastronomic projects into true experiences of flavor and success.'
       ],
       stats: [
         { n: '15+', l: 'years cooking' },
-        { n: 'G20 · BRICS', l: 'summits 2024 · 2025' },
+        { n: 'G20 · BRICS · BLOOMBERG', l: 'events 2024 · 2025' },
         { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
-        { n: 'MAM', l: 'signed menu' }
+        { n: 'MAM', l: 'Strategic Consulting Chef' }
+      ]
+    },
+    it: {
+      kicker: 'La Chef', role: 'Chef Esecutiva',
+      intro: [
+        'Formazione internazionale presso la prestigiosa <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, in <strong>Italia</strong>, ed esperienza in <strong>ristoranti stellati Michelin</strong>. Ha guidato le cucine dei <strong>vertici G20 e BRICS</strong> e dell\'evento <strong>Bloomberg Brasil</strong>, valorizzando la gastronomia brasiliana con innovazione e impegno per la sostenibilità.',
+        'Attualmente è socia del <strong>Mercado Central</strong>, dove guida <strong>Bocado</strong> e il bistrot <strong>Petí</strong>. Firma il menu della <strong>Cantina do MAM</strong> e della <strong>Canastra Pizzaria</strong>, oltre ad offrire consulenza specializzata in gestione ristoranti, catering e allestimento cucine.',
+        'Con una carriera che unisce <strong>tecnica internazionale</strong>, esperienza in <strong>case stellate</strong>, partecipazione a <strong>grandi eventi</strong> e <strong>visione imprenditoriale</strong>, Júlia Raposo si afferma come una professionista completa, capace di trasformare progetti gastronomici in vere esperienze di sapore e successo.'
+      ],
+      body: [
+        'La passione per la gastronomia ha sempre fatto parte della vita della chef <strong>Júlia Raposo</strong>, ma è stato nel 2012, a <strong>Londra</strong>, che ha mosso i primi passi professionali iscrivendosi alla <strong>Cookery School at Little Portland Street</strong>.',
+        'Tornata in Brasile, si è diplomata come <strong>Chef Esecutiva al Senac</strong> e ha lavorato in ristoranti rinomati della scena carioca. Presso l\'<strong>ONG Gastromotiva</strong>, dove ha lavorato per un anno, ha approfondito le sue conoscenze sull\'utilizzo integrale degli alimenti e sulla politica dello spreco minimo.',
+        'In cerca di eccellenza, si è trasferita in <strong>Italia</strong> e si è diplomata presso la prestigiosa <strong>Alma – Scuola di Alta Formazione in Cucina</strong>, considerata una delle scuole di gastronomia più rinomate d\'Europa. Ha attraversato diverse regioni italiane – <strong>Milano</strong>, <strong>Parma</strong> e <strong>Puglia</strong> – lavorando in <strong>ristoranti stellati</strong> e specializzandosi nella tecnica e filosofia della cucina italiana, privilegiando sempre creatività, ingredienti freschi e rispetto della stagionalità.',
+        'Tornata a Rio de Janeiro nel 2020, dopo l\'inizio della pandemia, Júlia ha continuato a guidare cucine di spicco, tra cui ristoranti a Barra da Tijuca e al Village Mall. Recentemente, è stata a capo della gastronomia di importanti eventi internazionali ospitati a Rio de Janeiro, come il <strong>Vertice del G20</strong>, il <strong>Vertice dei BRICS</strong> e l\'evento <strong>Bloomberg Brasil</strong>.',
+        'Júlia ha anche proprie attività al <strong>Mercado Central</strong>: il ristorante <strong>Bocado</strong> e il bistrot <strong>Petí</strong>, progetti che riflettono la sua identità gastronomica contemporanea, creativa e affettiva.',
+        'Attualmente, la chef firma il menu della <strong>Cantina do MAM</strong>, al <strong>Museo d\'Arte Moderna di Rio de Janeiro</strong>, e della <strong>Canastra Pizzaria</strong>. Inoltre, offre consulenza specializzata in gestione ristoranti, catering e allestimento cucine — dal layout al menu, inclusa la formazione del personale.',
+        'Con una carriera che unisce <strong>tecnica internazionale</strong>, esperienza in <strong>case stellate</strong>, partecipazione a <strong>grandi eventi</strong> e <strong>visione imprenditoriale</strong>, Júlia Raposo si afferma come una professionista completa, capace di trasformare progetti gastronomici in vere esperienze di sapore e successo.'
+      ],
+      stats: [
+        { n: '15+', l: 'anni di cucina' },
+        { n: 'G20 · BRICS · BLOOMBERG', l: 'eventi 2024 · 2025' },
+        { n: 'BOCADO · PETÍ', l: 'Mercado Central' },
+        { n: 'MAM', l: 'Chef Consulente Strategica' }
       ]
     }
   },
@@ -287,32 +342,49 @@ const COPY = {
       { name: 'CORPORATE EVENTS', body: 'Gastronomic experiences for brands, companies and large-scale gatherings — from concept to execution.' },
       { name: 'SIGNATURE CATERING', body: 'Catering with its own identity, seasonal menus and experiences designed in every detail.' },
       { name: 'CONSULTING', body: 'Strategy and development for restaurants and contemporary food operations.' }
+    ]},
+    it: { kicker: 'Cosa facciamo', items: [
+      { name: 'EVENTI AZIENDALI', body: 'Esperienze gastronomiche per marchi, aziende e incontri su larga scala — dal concept all\'esecuzione.' },
+      { name: 'CATERING D\'AUTORE', body: 'Catering con identità propria, menu stagionali ed esperienze curate in ogni dettaglio.' },
+      { name: 'CONSULENZA', body: 'Strategia e sviluppo per ristoranti e operazioni gastronomiche contemporanee.' }
     ]}
   },
   gallery: {
     pt: [
-      { span: 'tall', photo: 'foto1' },
-      { span: 'tall', photo: 'foto2' },
-      { span: 'tall', photo: 'foto3' },
-      { span: 'tall', photo: 'foto4' },
-      { span: 'tall', photo: 'foto5' },
-      { span: 'tall', photo: 'foto6' },
-      { span: 'tall', photo: 'foto7' },
-      { span: 'tall', photo: 'foto8' },
-      { span: 'tall', photo: 'foto9' },
-      { span: 'tall', photo: 'foto10' }
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' }
     ],
     en: [
-      { span: 'tall', photo: 'foto1' },
-      { span: 'tall', photo: 'foto2' },
-      { span: 'tall', photo: 'foto3' },
-      { span: 'tall', photo: 'foto4' },
-      { span: 'tall', photo: 'foto5' },
-      { span: 'tall', photo: 'foto6' },
-      { span: 'tall', photo: 'foto7' },
-      { span: 'tall', photo: 'foto8' },
-      { span: 'tall', photo: 'foto9' },
-      { span: 'tall', photo: 'foto10' }
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' }
+    ],
+    it: [
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' },
+      { span: 'tall' }
     ]
   },
   press: {
@@ -353,7 +425,8 @@ const COPY = {
   },
   footer: {
     pt: { tagline: 'Cozinha autoral, raiz brasileira, técnica italiana.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Chefe Executiva & Consultoria' },
-    en: { tagline: 'Signature cuisine, Brazilian roots, Italian technique.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Executive Chef & Consulting' }
+    en: { tagline: 'Signature cuisine, Brazilian roots, Italian technique.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Executive Chef & Consulting' },
+    it: { tagline: 'Cucina d\'autore, radici brasiliane, tecnica italiana.', ig: '@juliaraposoc', email: 'juliaraposodacamara@gmail.com', phone: '+55 21 98279-2817', addr: 'Rio de Janeiro, RJ', copy: '© 2026 Julia Raposo · Chef Esecutiva & Consulenza' }
   }
 };
 
@@ -361,7 +434,7 @@ const COPY = {
 function LangToggle({ lang, setLang }) {
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', border: `1px solid ${T.fg}`, borderRadius: 999, padding: 2, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
-      {['pt','en'].map(l => (
+      {['pt','en','it'].map(l => (
         <button key={l} onClick={() => setLang(l)} style={{ padding: '5px 11px', borderRadius: 999, background: lang===l ? T.fg : 'transparent', color: lang===l ? T.bg : T.fg, transition: 'all 0.18s' }}>{l.toUpperCase()}</button>
       ))}
     </div>
@@ -378,9 +451,9 @@ function Nav({ lang, setLang, scrolled, sections }) {
   return (
     <>
     <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: scrolled ? 'rgba(245,239,226,0.92)' : T.bg, backdropFilter: scrolled ? 'blur(14px)' : 'none', borderBottom: `1px solid ${scrolled ? T.line : 'transparent'}`, transition: 'all 0.25s' }}>
-      <div className="nav-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 44px' : '22px 44px', transition: 'padding 0.25s' }}>
+      <div className="nav-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: scrolled ? '14px 56px' : '22px 56px', transition: 'padding 0.25s' }}>
         <button onClick={() => window.scrollTo({top:0,behavior:'smooth'})} style={{ fontFamily: T.cond, fontSize: 20, fontWeight: 700, letterSpacing: '0.02em', color: T.fg }}>
-          Julia Raposo<span style={{ color: T.green }}>.</span>
+          Julia Raposo
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
           <ul className="nav-links" style={{ listStyle: 'none', display: 'flex', gap: 28, margin: 0, padding: 0 }}>
@@ -422,19 +495,19 @@ function Hero({ lang, onBookClick, onAboutClick }) {
     <header style={{ position: 'relative', background: T.bg, padding: '30px 56px 60px' }} className="hero-wrap">
       <div style={{ paddingBottom: 20, borderBottom: `1px solid ${T.line}`, display: 'flex', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.soft, fontWeight: 500, flexWrap: 'wrap', gap: '8px 20px' }}>
         <span>{c.eyebrow}</span>
-        <span>♦ Mercado Central · Bocado · Petí · MAM</span>
+        <span>Mercado Central · Bocado · Petí · MAM</span>
       </div>
-      <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 50, alignItems: 'center', paddingTop: 50 }}>
+      <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, alignItems: 'center', paddingTop: 50 }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: T.green, fontWeight: 600, marginBottom: 18 }}>
             Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
           </div>
           <h1 className="heading-xl" style={{ fontFamily: T.cond, fontSize: 'clamp(56px,8vw,120px)', lineHeight: 0.88, letterSpacing: '0', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
             <span style={{ color: T.green }}>JULIA</span><br />
-            <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo.</span>
+            <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>raposo</span>
           </h1>
           <div style={{ marginTop: 24, fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontSize: 'clamp(17px,1.8vw,24px)', lineHeight: 1.3, letterSpacing: '-0.015em', color: T.fg, maxWidth: 560 }}>
-            {lang==='pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : 'Signature cuisine, Brazilian roots, Italian technique.'}
+            {lang==='pt' ? 'Cozinha autoral, raiz brasileira, técnica italiana.' : lang==='en' ? 'Signature cuisine, Brazilian roots, Italian technique.' : 'Cucina d\'autore, radici brasiliane, tecnica italiana.'}
           </div>
           <div className="hero-actions" style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <button onClick={onAboutClick} style={{ padding: '16px 24px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700, fontFamily: T.mono, border: `1.5px solid ${T.fg}`, color: T.fg, transition: 'all 0.18s' }}
@@ -450,7 +523,7 @@ function Hero({ lang, onBookClick, onAboutClick }) {
           </div>
         </div>
         <div className="hero-img" style={{ position: 'relative' }}>
-          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: 460, objectFit: 'cover', display: 'block' }} />
+          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: '520px', objectFit: 'cover', display: 'block', borderRadius: '8px' }} />
         </div>
       </div>
     </header>
@@ -461,11 +534,12 @@ function Hero({ lang, onBookClick, onAboutClick }) {
 function Marquee() {
   return (
     <div style={{ background: T.green, color: T.salmon, padding: '22px 0', overflow: 'hidden', borderTop: `1px solid ${T.greenDeep}`, borderBottom: `1px solid ${T.greenDeep}` }}>
-      <div style={{ display: 'flex', gap: 42, whiteSpace: 'nowrap', fontFamily: T.cond, fontSize: 38, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', animation: 'mq 32s linear infinite' }}>
-        {[0,1].map(k => (
+      <div className="marquee-text" style={{ display: 'flex', gap: 42, whiteSpace: 'nowrap', fontFamily: T.cond, fontSize: 38, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', animation: 'mq 40s linear infinite' }}>
+        {[0,1,2,3].map(k => (
           <React.Fragment key={k}>
             <span>G20 · 2024</span><span style={{color:T.bg}}>◆</span>
             <span style={{fontStyle:'italic',fontFamily:T.serifIt,textTransform:'none',fontWeight:500}}>BRICS · 2025</span><span style={{color:T.bg}}>◆</span>
+            <span>BLOOMBERG BRASIL</span><span style={{color:T.bg}}>◆</span>
             <span>MAM RIO</span><span style={{color:T.bg}}>◆</span>
             <span>BOCADO · PETÍ</span><span style={{color:T.bg}}>◆</span>
             <span>MERCADO CENTRAL</span><span style={{color:T.bg}}>◆</span>
@@ -485,7 +559,7 @@ function About({ lang }) {
   return (
     <section className="section-pad" style={{ padding: '90px 56px', background: T.bg, color: T.fg }}>
       <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.soft, marginBottom: 50 }}>
-        {lang==='pt' ? 'Chef executiva' : 'Executive chef'} <span style={{ color: T.green }}>·</span> Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
+        {lang==='pt' ? 'Chef executiva' : lang==='en' ? 'Executive chef' : 'Chef esecutiva'} <span style={{ color: T.green }}>·</span> Rio de Janeiro <span style={{ color: T.green }}>·</span> Brasil
       </div>
       
       <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 70, marginBottom: 70 }}>
@@ -498,11 +572,15 @@ function About({ lang }) {
         </div>
         
         <div style={{ paddingTop: 30 }}>
-          {c.intro.map((p,i) => <p key={i} style={{ fontSize: 17, lineHeight: 1.7, marginBottom: 22, color: T.fg }}>{p}</p>)}
+          {c.intro.map((p,i) => (
+            <p key={i} style={{ fontSize: 17, lineHeight: 1.7, marginBottom: 22, color: T.fg }} dangerouslySetInnerHTML={{ __html: p }} />
+          ))}
           
           {expanded && (
             <div style={{ marginTop: 32, paddingTop: 32, borderTop: `1px solid ${T.line}` }}>
-              {c.body.map((p,i) => <p key={i} style={{ fontSize: 16, lineHeight: 1.7, marginBottom: 20, color: T.fg, opacity: 0.9 }}>{p}</p>)}
+              {c.body.map((p,i) => (
+                <p key={i} style={{ fontSize: 16, lineHeight: 1.7, marginBottom: 20, color: T.fg, opacity: 0.9 }} dangerouslySetInnerHTML={{ __html: p }} />
+              ))}
             </div>
           )}
           
@@ -522,16 +600,16 @@ function About({ lang }) {
             }}
             onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
             onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
-            {expanded ? (lang === 'pt' ? '← Mostrar menos' : '← Show less') : (lang === 'pt' ? 'Ler trajetória completa →' : 'Read full journey →')}
+            {expanded ? (lang === 'pt' ? '← Mostrar menos' : lang === 'en' ? '← Show less' : '← Mostra meno') : (lang === 'pt' ? 'Ler trajetória completa →' : lang === 'en' ? 'Read full journey →' : 'Leggi il percorso completo →')}
           </button>
         </div>
       </div>
       
       <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', border: `1px solid ${T.line}` }}>
         {c.stats.map((s,i) => (
-          <div key={i} style={{ padding: '28px 20px', borderRight: i<3 ? `1px solid ${T.line}` : 'none', color: T.fg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 120 }}>
-            <div className="stat-n" style={{ fontFamily: T.cond, fontSize: 'clamp(24px,3vw,40px)', lineHeight: 1.0, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: T.green, whiteSpace: 'nowrap' }}>{s.n}</div>
-            <div style={{ marginTop: 10, fontFamily: T.mono, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.75 }}>{s.l}</div>
+          <div key={i} className="stat-card" style={{ padding: '28px 20px', borderRight: i<3 ? `1px solid ${T.line}` : 'none', color: T.fg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 120, background: T.bg, transition: 'all 0.18s ease', cursor: 'pointer' }}>
+            <div className="stat-n" style={{ fontFamily: T.cond, fontSize: 'clamp(24px,3vw,40px)', lineHeight: 1.0, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: T.green, whiteSpace: 'nowrap', transition: 'color 0.18s ease' }}>{s.n}</div>
+            <div className="stat-l" style={{ marginTop: 10, fontFamily: T.mono, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.75, transition: 'color 0.18s ease, opacity 0.18s ease' }}>{s.l}</div>
           </div>
         ))}
       </div>
@@ -540,33 +618,23 @@ function About({ lang }) {
 }
 
 // ── SERVICES ─────────────────────────────────────────────────
-// CORREÇÃO 3: sem seta, sem pills, cards uniformes informativos
 function Services({ lang }) {
   const c = COPY.services[lang];
-  const [openIndex, setOpenIndex] = React.useState(null);
-  const toggle = (index) => setOpenIndex(openIndex === index ? null : index);
 
   return (
     <section style={{ background: T.bg, color: T.fg, padding: '90px 56px', borderTop: `1px solid ${T.line}` }}>
       <div style={{ marginBottom: 50 }}>
         <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 14, fontWeight: 600 }}>{c.kicker}</div>
         <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(36px,6vw,72px)', lineHeight: 0.92, letterSpacing: '-0.02em', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
-          {lang==='pt' ? 'SERVIÇOS' : 'SERVICES'}
+          {lang==='pt' ? 'SERVIÇOS' : lang==='en' ? 'SERVICES' : 'SERVIZI'}
         </h2>
       </div>
       <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
         {c.items.map((s,i) => (
-          <button key={i} className="service-card" onClick={() => toggle(i)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-between', cursor: 'pointer' }}>
-            <div>
-              <div className="service-title" style={{ fontFamily: T.cond, fontSize: 18, lineHeight: 1.05, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 12 }}>{s.name}</div>
-              {openIndex === i && (
-                <p style={{ fontFamily: T.sans, fontSize: 14, lineHeight: 1.75 }}>{s.body}</p>
-              )}
-            </div>
-            <div className="service-meta" style={{ marginTop: 18, fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.85 }}>
-              {openIndex === i ? (lang==='pt' ? 'FECHAR' : 'CLOSE') : (lang==='pt' ? 'VER MAIS' : 'SEE MORE')}
-            </div>
-          </button>
+          <div key={i} className="service-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <div className="service-title" style={{ fontFamily: T.cond, fontSize: 18, lineHeight: 1.05, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 12 }}>{s.name}</div>
+            <p style={{ fontFamily: T.sans, fontSize: 14, lineHeight: 1.75, margin: 0, opacity: 1, color: T.fg }}>{s.body}</p>
+          </div>
         ))}
       </div>
     </section>
@@ -581,36 +649,20 @@ function Gallery({ lang }) {
     <section style={{ padding: '90px 56px', background: T.bg }}>
       <div style={{ marginBottom: 60 }}>
         <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.green, marginBottom: 20, fontWeight: 600 }}>
-          {lang==='pt' ? 'Portfólio' : 'Portfolio'}
+          {lang==='pt' ? 'Portfólio' : lang==='en' ? 'Portfolio' : 'Portfolio'}
         </div>
         <h2 style={{ fontFamily: T.cond, fontSize: 'clamp(52px,7vw,100px)', lineHeight: 0.86, letterSpacing: '-0.015em', fontWeight: 700, margin: 0, textTransform: 'uppercase', color: T.green }}>
-          {lang==='pt' ? 'NO' : 'ON THE'}<br />
-          <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>{lang==='pt' ? 'prato' : 'plate'}</span>
+          {lang==='pt' ? 'NO' : lang==='en' ? 'ON THE' : 'NEL'}<br />
+          <span style={{ fontFamily: '"Bricolage Grotesque"', fontStyle: 'italic', fontWeight: 500, textTransform: 'none', letterSpacing: '-0.04em', color: T.fg }}>{lang==='pt' ? 'prato' : lang==='en' ? 'plate' : 'piatto'}</span>
         </h2>
       </div>
       <div className="dishes-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gridAutoRows: '220px', gap: 14 }}>
         {items.map((it,i) => {
           const span = it.span==='tall' ? {gridColumn:'span 2',gridRow:'span 2'} : it.span==='wide' ? {gridColumn:'span 4'} : {gridColumn:'span 2'};
-          const imageUrl = `https://AFPMM.github.io/juliaraposo.com/${it.photo}.jpg`;
+          const photoNum = i + 1;
           return (
-            <div key={i} style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img 
-                src={imageUrl}
-                alt={lang === 'pt' ? `Foto ${i + 1}` : `Photo ${i + 1}`} 
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                onLoad={(e) => {
-                  console.log(`✓ Loaded: ${it.photo}.jpg`);
-                }}
-                onError={(e) => {
-                  console.log(`✗ Failed: ${it.photo}.jpg at ${imageUrl}`);
-                  e.target.style.display = 'none';
-                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
-                }}
-              />
-              <div style={{ display: 'none', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 20, textAlign: 'center', color: T.bg, opacity: 0.5 }}>
-                <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.1em' }}>{it.photo}.jpg</div>
-                <div style={{ fontFamily: T.mono, fontSize: 9, marginTop: 8, opacity: 0.7 }}>Foto não encontrada</div>
-              </div>
+            <div key={i} className="img-placeholder" style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%', '--ph-bg': '#234C57', '--ph-stripe': 'rgba(245,239,226,0.08)', '--ph-label': 'rgba(245,239,226,0.7)', '--ph-label-bg': 'rgba(27,58,75,0.3)' }}>
+              <img src={`https://AFPMM.github.io/juliaraposo.com/foto${photoNum}.jpg`} alt={lang === 'pt' ? `Foto ${photoNum}` : lang === 'en' ? `Photo ${photoNum}` : `Foto ${photoNum}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           );
         })}
@@ -621,7 +673,7 @@ function Gallery({ lang }) {
 
 // ── BOOKING ──────────────────────────────────────────────────
 function Booking({ lang }) {
-  const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : 'Hi Julia! I would like to know more about your services.');
+  const waMsg = encodeURIComponent(lang === 'pt' ? 'Olá Julia! Gostaria de saber mais sobre os seus serviços.' : lang === 'en' ? 'Hi Julia! I would like to know more about your services.' : 'Ciao Julia! Vorrei sapere di più sui tuoi servizi.');
   const waUrl = `https://wa.me/5521982792817?text=${waMsg}`;
   const c = lang === 'pt' ? {
     kicker: 'Reservar',
@@ -629,10 +681,16 @@ function Booking({ lang }) {
     cta: 'Iniciar conversa',
     email: 'juliaraposodacamara@gmail.com',
     phone: '+55 21 98279-2817'
-  } : {
+  } : lang === 'en' ? {
     kicker: 'Book',
     title: 'Tell us your idea',
     cta: 'Start conversation',
+    email: 'juliaraposodacamara@gmail.com',
+    phone: '+55 21 98279-2817'
+  } : {
+    kicker: 'Prenota',
+    title: 'Raccontaci la tua idea',
+    cta: 'Inizia la conversazione',
     email: 'juliaraposodacamara@gmail.com',
     phone: '+55 21 98279-2817'
   };
@@ -659,7 +717,7 @@ function Booking({ lang }) {
           
           <div style={{ marginBottom: 24 }}>
             <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.soft, marginBottom: 16 }}>
-              {lang === 'pt' ? 'Contactos:' : 'Contacts:'}
+              {lang === 'pt' ? 'Contactos:' : lang === 'en' ? 'Contacts:' : 'Contatti:'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <a href={`mailto:${c.email}`} style={{ fontFamily: T.sans, fontSize: 14, color: T.fg, opacity: 0.8, transition: 'opacity 0.2s' }}
@@ -678,7 +736,7 @@ function Booking({ lang }) {
         </div>
         
         <div className="booking-img" style={{ position: 'relative' }}>
-          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: 460, objectFit: 'cover', display: 'block' }} />
+          <img src="https://AFPMM.github.io/juliaraposo.com/hero.JPEG" alt="Julia Raposo" style={{ width: '100%', height: '520px', objectFit: 'cover', display: 'block', borderRadius: '8px' }} />
         </div>
       </div>
     </section>
