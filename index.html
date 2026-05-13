@@ -607,9 +607,26 @@ function Gallery({ lang }) {
       <div className="dishes-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gridAutoRows: '220px', gap: 14 }}>
         {items.map((it,i) => {
           const span = it.span==='tall' ? {gridColumn:'span 2',gridRow:'span 2'} : it.span==='wide' ? {gridColumn:'span 4'} : {gridColumn:'span 2'};
+          const imageUrl = `https://AFPMM.github.io/juliaraposo.com/${it.photo}.jpg`;
           return (
-            <div key={i} style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%' }}>
-              <img src={`https://AFPMM.github.io/juliaraposo.com/${it.photo}.JPG`} alt={lang === 'pt' ? `Foto ${i + 1}` : `Photo ${i + 1}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div key={i} style={{ ...span, position: 'relative', overflow: 'hidden', background: T.greenDeep, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img 
+                src={imageUrl}
+                alt={lang === 'pt' ? `Foto ${i + 1}` : `Photo ${i + 1}`} 
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                onLoad={(e) => {
+                  console.log(`✓ Loaded: ${it.photo}.jpg`);
+                }}
+                onError={(e) => {
+                  console.log(`✗ Failed: ${it.photo}.jpg at ${imageUrl}`);
+                  e.target.style.display = 'none';
+                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div style={{ display: 'none', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 20, textAlign: 'center', color: T.bg, opacity: 0.5 }}>
+                <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.1em' }}>{it.photo}.jpg</div>
+                <div style={{ fontFamily: T.mono, fontSize: 9, marginTop: 8, opacity: 0.7 }}>Foto não encontrada</div>
+              </div>
             </div>
           );
         })}
